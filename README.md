@@ -7,9 +7,7 @@ A React + Vite application that integrates with The Movie Database (TMDB) API to
 This project requires environment variables to connect to the TMDB API. Create a `.env` file in the root directory with the following variables:
 
 ```env
-VITE_TMDB_ACCOUNT_ID="your_tmdb_account_id_here"
 VITE_TMDB_AUTH_KEY="Bearer your_tmdb_read_access_token_here"
-VITE_TMDB_ACCESS_TOKEN_WITHWRITEPMS="your_tmdb_write_access_token_here"
 ```
 
 To get your TMDB API keys:
