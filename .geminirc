@@ -1,0 +1,7 @@
+# .geminirc
+[project]
+# Ensure the agent reads the PRP methodology folder
+context_files = [
+    "PRPs-agentic-eng/CLAUDE.md",
+    "PRPs-agentic-eng/instructions.md"
+]

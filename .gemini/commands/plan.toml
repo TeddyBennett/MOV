@@ -1,0 +1,10 @@
+description = "Create a PRP implementation plan"
+prompt = """
+Referencing the template at `./PRPs-agentic-eng/.claude/commands/prp-core/prp-plan.md`, 
+create a detailed implementation plan for the following task: {{args}}
+
+Ensure you:
+1. Identify all files in `./src` or `./server` that need changes.
+2. Define exact shell commands to validate the changes (e.g., npm test, lint).
+3. Break the work into small, atomic tasks.
+"""
