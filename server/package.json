@@ -5,6 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "dotenv -e .env -- nodemon --exec ts-node server.ts",
+    "dev:dev": "dotenv -e .env.dev -- nodemon --exec ts-node server.ts",
     "dev:prod": "dotenv -e .env.prod -- nodemon --exec ts-node server.ts",
     "prisma:studio": "dotenv -e .env.prod -- prisma studio",
     "build": "tsc && npx prisma generate",
