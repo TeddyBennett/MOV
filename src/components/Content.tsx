@@ -106,7 +106,7 @@ const Content: React.FC<ContentProps> = ({
                                         <div className="absolute top-3 left-3 z-20 bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-lg shadow-indigo-600/30">
                                             {index + 1}
                                         </div>
-                                        <div className="aspect-[2/3] overflow-hidden">
+                                        <div className="trend-movie-poster overflow-hidden">
                                             <img
                                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                                 src={imgUrl}
