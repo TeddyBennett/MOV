@@ -1,0 +1,50 @@
+﻿    emailVerified: false,
+    createdAt: new Date("2026-01-22T14:04:32.545Z"),
+    updatedAt: new Date("2026-01-22T14:04:32.545Z"),
+    id: "d5vOrffzh05aGDuLN1y0Exldnk03Xss1",
++   username: String
+  },
+  select: undefined
+}
+
+Argument `username` is missing.
+    at throwValidationException (C:\Users\TheRo\htdoc\r
+epo\MovieApp\server\node_modules\@prisma\client\src\run
+time\core\errorRendering\throwValidationException.ts:46
+:9)
+    at Vr.handleRequestError (C:\Users\TheRo\htdoc\repo
+\MovieApp\server\node_modules\@prisma\client\src\runtim
+e\RequestHandler.ts:202:7)
+    at Vr.handleAndLogRequestError (C:\Users\TheRo\htdo
+c\repo\MovieApp\server\node_modules\@prisma\client\src\
+runtime\RequestHandler.ts:174:12)
+    at Vr.request (C:\Users\TheRo\htdoc\repo\MovieApp\s
+erver\node_modules\@prisma\client\src\runtime\RequestHa
+ndler.ts:143:12)
+    at processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async a (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\@prisma\client\src\runtime\getPrismaCli
+ent.ts:805:24)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/better-auth/src/ada
+pters/prisma-adapter/prisma-adapter.ts:342:21)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/@better-auth/core/d
+ist/db/adapter/factory.mjs:414:16)
+    at async createWithHooks (file:///C:/Users/TheRo/ht
+doc/repo/MovieApp/server/node_modules/better-auth/src/d
+b/with-hooks.ts:52:7)
+    at async Object.createUser (file:///C:/Users/TheRo/
+htdoc/repo/MovieApp/server/node_modules/better-auth/src
+/db/internal-adapter.ts:119:24) {
+  clientVersion: '7.3.0'
+}
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ΓÜÖ∩╕Å  load multiple .env files with { path: ['.env.local', '.env'] }
+Environment variables loaded
+Server running on port 5000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting child process[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
