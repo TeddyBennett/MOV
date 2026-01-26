@@ -1,7 +1,10 @@
 import { handleApiResponse, logError } from '../utils/errorHandler';
 
 const envBackendUrl = import.meta.env.VITE_BACKEND_URL;
-const BACKEND_BASE_URL = typeof envBackendUrl !== 'undefined' ? envBackendUrl : 'http://localhost:5000';
+// Smart fallback: use provided URL, or localhost in dev, or empty string (relative) in production
+const BACKEND_BASE_URL = typeof envBackendUrl !== 'undefined' 
+    ? envBackendUrl 
+    : (import.meta.env.DEV ? 'http://localhost:5000' : '');
 
 /**
  * Service class for handling all API communications with our custom backend
