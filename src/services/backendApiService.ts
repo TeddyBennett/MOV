@@ -334,4 +334,35 @@ export class BackendApiService {
             throw error;
         }
     }
+
+    // --- Trending (Global) ---
+
+    /**
+     * Get top trending movies from DB
+     */
+    static async getTrending() {
+        try {
+            // Note: We use fetchWithAuth but trending is public, 
+            // credentials 'include' won't hurt and allows personalized trending in future
+            return await this.fetchWithAuth('/api/trending');
+        } catch (error) {
+            logError('getTrending', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Increment search count for a movie
+     */
+    static async incrementTrending(movieData: any) {
+        try {
+            return await this.fetchWithAuth('/api/trending/increment', {
+                method: 'POST',
+                body: JSON.stringify(movieData),
+            });
+        } catch (error) {
+            logError('incrementTrending', error);
+            throw error;
+        }
+    }
 }

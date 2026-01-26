@@ -126,3 +126,13 @@ model Rating {
   // A user can only rate a movie once
   @@unique([userId, movieId])
 }
+
+model TrendingMovie {
+  movieId      Int      @id
+  title        String
+  poster_path  String?
+  vote_average Float
+  release_date String
+  count        Int      @default(1)
+  updatedAt    DateTime @updatedAt
+}

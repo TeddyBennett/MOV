@@ -88,7 +88,7 @@ const Content: React.FC<ContentProps> = ({
                 </header>
 
                 {!hasTrendingMovies ? (
-                    <div className="bg-gray-900/50 border border-dashed border-gray-800 rounded-3xl py-20 text-center">
+                    <div className="bg-gray-900/50 border border-dashed border-gray-800 rounded-3xl py-16 text-center">
                         <div className="text-6xl mb-4">🎬</div>
                         <h3 className="text-xl font-bold text-white">No Trending Movies Yet</h3>
                         <p className="text-gray-400 max-w-xs mx-auto">Check back later to see what's trending across the platform!</p>

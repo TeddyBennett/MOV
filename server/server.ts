@@ -11,6 +11,7 @@ console.log(`🛠️  Node loaded env via: ${envFlag || 'Default/None'}`);
 console.log('--- SYSTEM STARTUP ---');
 console.log('Mode:', process.env.NODE_ENV || 'not set');
 console.log('DATABASE_URL:', process.env.DATABASE_URL ? '✅ Connected' : '❌ Missing');
+console.log('TrendingMovie Model:', (prisma as any).trendingMovie ? '✅ Available' : '❌ Missing (Need Re-generation)');
 console.log('BETTER_AUTH_URL:', process.env.BETTER_AUTH_URL ? '✅ Configured' : '⚠️ Warning: Missing');
 console.log('TMDB_AUTH_KEY:', process.env.TMDB_AUTH_KEY ? '✅ Configured' : '⚠️ Warning: Missing');
 console.log('----------------------');

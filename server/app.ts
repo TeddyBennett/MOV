@@ -8,6 +8,7 @@ import listRouter from './routes/lists.js';
 import ratingRouter from './routes/ratings.js';
 import authRouter from './routes/auth.js';
 import tmdbRouter from './routes/tmdb.js';
+import trendingRouter from './routes/trending.js';
 
 const app: Application = express();
 
@@ -34,6 +35,7 @@ app.use('/api/watchlist', watchlistRouter);
 app.use('/api/lists', listRouter);
 app.use('/api/ratings', ratingRouter);
 app.use('/api/tmdb', tmdbRouter);
+app.use('/api/trending', trendingRouter);
 
 // Fallback for unmatched routes
 app.use((req: Request, res: Response) => {

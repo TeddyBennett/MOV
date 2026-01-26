@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import genres from './genres';
 import { MovieDataService } from '../services/movieDataService';
+import { BackendApiService } from '../services/backendApiService';
 
 // Create a Context
 const DataContext = createContext();
@@ -15,10 +16,7 @@ export const DataContextProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [userStatsVersion, setUserStatsVersion] = useState(0); // Trigger re-renders
-  const [trendMovies, setTrendMovies] = useState(() => {
-    const storedMovie = localStorage.getItem("trendMovies");
-    return storedMovie ? JSON.parse(storedMovie) : [];
-  });
+  const [trendMovies, setTrendMovies] = useState([]);
 
   // Initialize the movie data service - use useMemo to persist across renders
   const movieDataService = useMemo(() => new MovieDataService(), []);
@@ -28,15 +26,25 @@ export const DataContextProvider = ({ children }) => {
     setUserStatsVersion(v => v + 1);
   }, []);
 
-  // Initialize user data when the app loads
+  // Initialize user and trending data when the app loads
   useEffect(() => {
     const initializeData = async () => {
       try {
+        // Fetch User specific data (favs, etc)
         await movieDataService.initializeUserData();
+        
+        // Fetch Global Trending data from DB
+        const trending = await BackendApiService.getTrending().catch(() => []);
+        const formattedTrending = (trending || []).map(m => ({
+            ...m,
+            id: m.movieId // Map movieId to id for frontend compatibility
+        }));
+        setTrendMovies(formattedTrending);
+
         setIsInitializing(false);
         triggerUpdate(); // Refresh components with loaded data
       } catch (error) {
-        console.error('Error initializing user data:', error);
+        console.error('Error initializing data:', error);
         setIsInitializing(false);
       }
     };
@@ -44,20 +52,29 @@ export const DataContextProvider = ({ children }) => {
     initializeData();
   }, [movieDataService, triggerUpdate]);
 
-  const updateTrendMovies = (firstIndexMovie) => {
-    const isTrendMovieExist = trendMovies.find(movie => movie.id === firstIndexMovie.id);
-    let updatedTrendMovies = [];
-    if (isTrendMovieExist) {
-      updatedTrendMovies = trendMovies.map(movie =>
-        movie.id === firstIndexMovie.id ? { ...movie, count: movie.count + 1 } : movie
-      );
-      setTrendMovies(updatedTrendMovies);
-    } else {
-      const newMovie = { ...firstIndexMovie, count: 1 };
-      updatedTrendMovies = [...trendMovies, newMovie];
-      setTrendMovies(updatedTrendMovies);
+  const updateTrendMovies = async (firstIndexMovie) => {
+    if (!firstIndexMovie || !firstIndexMovie.id) return;
+    
+    try {
+        // Increment count in DB
+        await BackendApiService.incrementTrending({
+            movieId: Number(firstIndexMovie.id),
+            title: firstIndexMovie.title || firstIndexMovie.name || "N/A",
+            poster_path: firstIndexMovie.poster_path || null,
+            vote_average: Number(firstIndexMovie.vote_average) || 0,
+            release_date: firstIndexMovie.release_date || "N/A"
+        }).catch(err => console.warn('[DataContext] Trending increment failed:', err));
+
+        // Re-fetch trending list to keep UI in sync
+        const trending = await BackendApiService.getTrending().catch(() => []);
+        const formattedTrending = (trending || []).map(m => ({
+            ...m,
+            id: m.movieId // Map movieId to id for frontend compatibility
+        }));
+        setTrendMovies(formattedTrending);
+    } catch (error) {
+        console.error('Error updating trending movies:', error);
     }
-    localStorage.setItem('trendMovies', JSON.stringify(updatedTrendMovies));
   };
 
   // Expose the movie data service methods, wrapped to trigger re-renders
