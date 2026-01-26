@@ -6,14 +6,13 @@ esbuild.build({
     platform: 'node',
     target: 'node20',
     outdir: './dist',
-    format: 'cjs',
+    format: 'cjs', // CommonJS is most reliable for Vercel/Node deployments
     external: [
         '@prisma/client',
-        'prisma',
-        // Add any other dependencies that shouldn't be bundled
+        'prisma'
     ],
-    minify: false, // Set to true for smaller builds
-    sourcemap: true, // Helpful for debugging
+    minify: true,
+    sourcemap: true,
 }).then(() => {
     console.log('✓ Server build complete');
 }).catch(() => process.exit(1));
