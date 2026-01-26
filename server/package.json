@@ -4,10 +4,13 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node server.ts",
-    "build": "tsc",
+    "dev": "dotenv -e .env -- nodemon --exec ts-node server.ts",
+    "dev:prod": "dotenv -e .env.prod -- nodemon --exec ts-node server.ts",
+    "prisma:studio": "dotenv -e .env.prod -- prisma studio",
+    "build": "tsc && npx prisma generate",
     "start": "node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:migrate": "dotenv -e .env.prod -- prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +25,7 @@
     "better-auth": "^1.4.17",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "dotenv-cli": "^11.0.0",
     "express": "^5.2.1",
     "nodemon": "^3.1.11",
     "pg": "^8.17.2",

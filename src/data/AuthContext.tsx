@@ -21,11 +21,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const checkAuth = useCallback(async () => {
         try {
             setLoading(true);
-            const data = await BackendApiService.getCurrentUser();
-            setUser(data.user);
+            // Architect's Note: .catch(() => null) ensures we don't spam the console with 401s
+            const data = await BackendApiService.getCurrentUser().catch(() => null);
+            if (data && data.user) {
+                setUser(data.user);
+            } else {
+                setUser(null);
+            }
         } catch (error) {
             setUser(null);
-            console.log('No active session foundation');
         } finally {
             setLoading(false);
         }

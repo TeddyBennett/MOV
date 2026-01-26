@@ -19,8 +19,13 @@ export class MovieDataService {
   async initializeUserData() {
     try {
       // Architect's Note: Check for user session before fetching
+      // We catch the error here and return null to prevent 401 logs from bubbling up
       const session = await BackendApiService.getCurrentUser().catch(() => null);
-      if (!session) return;
+
+      if (!session) {
+        // console.log('[MovieDataService] No active session found. Skipping data initialization.');
+        return;
+      }
 
       await Promise.all([
         this.fetchFavorites(),
@@ -29,7 +34,10 @@ export class MovieDataService {
         this.fetchRatings()
       ]);
     } catch (error) {
-      console.warn('User not logged in or session expired. User data not initialized.');
+      // Only log actual unexpected errors, not simple 401s
+      if (error.code !== 'HTTP_401') {
+        console.error('[MovieDataService] Unexpected error during initialization:', error);
+      }
     }
   }
 
