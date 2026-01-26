@@ -1,6 +1,6 @@
 import { handleApiResponse, logError } from '../utils/errorHandler';
 
-const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 /**
  * Service class for handling all API communications with our custom backend

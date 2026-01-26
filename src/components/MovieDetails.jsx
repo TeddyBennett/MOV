@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getAuthHeaders } from '../services/authService';
+import { ApiService } from '../services/apiService';
 import noPosterH from '../assets/No-Poster-h.png';
 import { BsStarFill, BsFillHeartFill, BsFillBookmarkPlusFill, BsChevronLeft, BsCalendar, BsClock, BsTag, BsBookmarkFill } from 'react-icons/bs';
 import { useDataContext } from '../data/DataContext';
@@ -22,20 +22,11 @@ function MovieDetails() {
       try {
         setIsLoading(true);
 
-        // Get authentication headers
-        const headers = getAuthHeaders();
-
-        // Fetch movie details
-        const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,recommendations`, {
-          method: 'GET',
-          headers: headers
+        // Fetch movie details via proxy
+        const movieData = await ApiService.fetchMovieDetails(id, {
+          append_to_response: 'credits,recommendations'
         });
 
-        if (!movieResponse.ok) {
-          throw new Error('Failed to fetch movie details');
-        }
-
-        const movieData = await movieResponse.json();
         setMovie(movieData);
 
         // Fetch cast members (top 10)

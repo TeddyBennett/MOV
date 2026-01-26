@@ -1,30 +1,27 @@
 // src/services/apiService.js
-// Single Responsibility: Handle all API communications with TMDB
-import { getAuthHeaders } from './authService';
+// Single Responsibility: Handle all API communications with TMDB via Backend Proxy
 import { handleApiResponse, logError } from '../utils/errorHandler';
+import { BackendApiService } from './backendApiService';
 
-const BASE_URL = 'https://api.themoviedb.org/3';
-const BASE_URL_V4 = 'https://api.themoviedb.org/4';
+const PROXY_BASE_URL = '/api/tmdb';
 
 /**
- * Service class for handling all API communications with TMDB
+ * Service class for handling all API communications with TMDB (Proxied through Backend)
  */
 export class ApiService {
   /**
+   * Helper to perform fetch via backend proxy
+   */
+  static async fetchViaProxy(path, options = {}) {
+    return BackendApiService.fetchWithAuth(`${PROXY_BASE_URL}${path}`, options);
+  }
+
+  /**
    * Fetch popular movies
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
    */
   static async fetchPopularMovies(page = 1) {
     try {
-      const url = `${BASE_URL}/movie/popular?page=${page}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/popular?page=${page}`);
     } catch (error) {
       logError('fetchPopularMovies', error);
       throw error;
@@ -33,20 +30,10 @@ export class ApiService {
 
   /**
    * Search movies by query
-   * @param {string} query - Search query
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
    */
   static async searchMovies(query, page = 1) {
     try {
-      const url = `${BASE_URL}/search/movie?page=${page}&sort_by=popularity.desc&query=${encodeURIComponent(query)}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/search?query=${encodeURIComponent(query)}&page=${page}`);
     } catch (error) {
       logError('searchMovies', error);
       throw error;
@@ -55,20 +42,10 @@ export class ApiService {
 
   /**
    * Fetch movies by genre
-   * @param {number} genreId - Genre ID to filter by
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
    */
   static async fetchMoviesByGenre(genreId, page = 1) {
     try {
-      const url = `${BASE_URL}/discover/movie?with_genres=${genreId}&page=${page}&sort_by=popularity.desc`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/genre/${genreId}?page=${page}`);
     } catch (error) {
       logError('fetchMoviesByGenre', error);
       throw error;
@@ -76,28 +53,14 @@ export class ApiService {
   }
 
   /**
-   * Add/remove movie from favorites
-   * @param {number} movieId - ID of the movie
-   * @param {boolean} favorite - Whether to add or remove from favorites
-   * @param {string} title - Title of the movie for notifications
-   * @returns {Promise<Object>} Response from API
+   * Add/remove movie from favorites (TMDB)
    */
-  static async updateFavorite(movieId, favorite, title) {
+  static async updateFavorite(movieId, favorite) {
     try {
-      const url = `${BASE_URL}/account/${import.meta.env.VITE_TMDB_ACCOUNT_ID}/favorite`;
-      const options = {
+      return await this.fetchViaProxy(`/favorite`, {
         method: 'POST',
-        headers: getAuthHeaders('write'),
-        body: JSON.stringify({
-          media_type: 'movie',
-          media_id: movieId,
-          favorite: favorite
-        })
-      };
-
-      const response = await fetch(url, options);
-
-      return await handleApiResponse(response);
+        body: JSON.stringify({ movieId, favorite })
+      });
     } catch (error) {
       logError('updateFavorite', error);
       throw error;
@@ -105,27 +68,14 @@ export class ApiService {
   }
 
   /**
-   * Add/remove movie from watchlist
-   * @param {number} movieId - ID of the movie
-   * @param {boolean} watchlist - Whether to add or remove from watchlist
-   * @param {string} title - Title of the movie for notifications
-   * @returns {Promise<Object>} Response from API
+   * Add/remove movie from watchlist (TMDB)
    */
-  static async updateWatchlist(movieId, watchlist, title) {
+  static async updateWatchlist(movieId, watchlist) {
     try {
-      const url = `${BASE_URL}/account/${import.meta.env.VITE_TMDB_ACCOUNT_ID}/watchlist`;
-      const options = {
+      return await this.fetchViaProxy(`/watchlist`, {
         method: 'POST',
-        headers: getAuthHeaders('write'),
-        body: JSON.stringify({
-          media_type: 'movie',
-          media_id: movieId,
-          watchlist: watchlist
-        })
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+        body: JSON.stringify({ movieId, watchlist })
+      });
     } catch (error) {
       logError('updateWatchlist', error);
       throw error;
@@ -133,22 +83,14 @@ export class ApiService {
   }
 
   /**
-   * Rate a movie
-   * @param {number} movieId - ID of the movie
-   * @param {number} rating - Rating value (0-10)
-   * @returns {Promise<Object>} Response from API
+   * Rate a movie (TMDB)
    */
   static async rateMovie(movieId, rating) {
     try {
-      const url = `${BASE_URL}/movie/${movieId}/rating`;
-      const options = {
+      return await this.fetchViaProxy(`/rating`, {
         method: 'POST',
-        headers: getAuthHeaders('write'),
-        body: JSON.stringify({ value: rating })
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+        body: JSON.stringify({ movieId, rating })
+      });
     } catch (error) {
       logError('rateMovie', error);
       throw error;
@@ -156,20 +98,13 @@ export class ApiService {
   }
 
   /**
-   * Delete movie rating
-   * @param {number} movieId - ID of the movie
-   * @returns {Promise<Object>} Response from API
+   * Delete movie rating (TMDB)
    */
   static async deleteRating(movieId) {
     try {
-      const url = `${BASE_URL}/movie/${movieId}/rating`;
-      const options = {
-        method: 'DELETE',
-        headers: getAuthHeaders('write')
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/rating/${movieId}`, {
+        method: 'DELETE'
+      });
     } catch (error) {
       logError('deleteRating', error);
       throw error;
@@ -177,27 +112,14 @@ export class ApiService {
   }
 
   /**
-   * Add movie to a list
-   * @param {number} listId - ID of the list
-   * @param {number} movieId - ID of the movie
-   * @returns {Promise<Object>} Response from API
+   * Add movie to a list (TMDB)
    */
   static async addMovieToList(listId, movieId) {
     try {
-      const url = `${BASE_URL_V4}/list/${listId}/items`;
-      const options = {
+      return await this.fetchViaProxy(`/list/${listId}/movies`, {
         method: 'POST',
-        headers: getAuthHeaders('write'),
-        body: JSON.stringify({
-          items: [{
-            media_type: 'movie',
-            media_id: movieId
-          }]
-        })
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+        body: JSON.stringify({ movieId })
+      });
     } catch (error) {
       logError('addMovieToList', error);
       throw error;
@@ -205,27 +127,14 @@ export class ApiService {
   }
 
   /**
-   * Remove movie from a list
-   * @param {number} listId - ID of the list
-   * @param {number} movieId - ID of the movie
-   * @returns {Promise<Object>} Response from API
+   * Remove movie from a list (TMDB)
    */
   static async removeMovieFromList(listId, movieId) {
     try {
-      const url = `${BASE_URL_V4}/list/${listId}/items`;
-      const options = {
+      return await this.fetchViaProxy(`/list/${listId}/movies`, {
         method: 'DELETE',
-        headers: getAuthHeaders('write'),
-        body: JSON.stringify({
-          items: [{
-            media_type: 'movie',
-            media_id: movieId
-          }]
-        })
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+        body: JSON.stringify({ movieId })
+      });
     } catch (error) {
       logError('removeMovieFromList', error);
       throw error;
@@ -233,21 +142,11 @@ export class ApiService {
   }
 
   /**
-   * Check if movie is in a list
-   * @param {number} listId - ID of the list
-   * @param {number} movieId - ID of the movie
-   * @returns {Promise<Object>} Response from API
+   * Check if movie is in a list (TMDB)
    */
   static async isMovieInList(listId, movieId) {
     try {
-      const url = `${BASE_URL_V4}/list/${listId}/item_status?media_id=${movieId}&media_type=movie`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/account/list/${listId}`); // We can filter client-side or add endpoint
     } catch (error) {
       logError('isMovieInList', error);
       throw error;
@@ -255,20 +154,11 @@ export class ApiService {
   }
 
   /**
-   * Fetch user's favorite movies
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
+   * Fetch user's favorite movies (TMDB)
    */
   static async fetchFavoriteMovies(page = 1) {
     try {
-      const url = `${BASE_URL}/account/${import.meta.env.VITE_TMDB_ACCOUNT_ID}/favorite/movies?page=${page}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/account/favorites?page=${page}`);
     } catch (error) {
       logError('fetchFavoriteMovies', error);
       throw error;
@@ -276,20 +166,11 @@ export class ApiService {
   }
 
   /**
-   * Fetch user's watchlist movies
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
+   * Fetch user's watchlist movies (TMDB)
    */
   static async fetchWatchlistMovies(page = 1) {
     try {
-      const url = `${BASE_URL}/account/${import.meta.env.VITE_TMDB_ACCOUNT_ID}/watchlist/movies?page=${page}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/account/watchlist?page=${page}`);
     } catch (error) {
       logError('fetchWatchlistMovies', error);
       throw error;
@@ -297,20 +178,11 @@ export class ApiService {
   }
 
   /**
-   * Fetch user's rated movies
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
+   * Fetch user's rated movies (TMDB)
    */
   static async fetchRatedMovies(page = 1) {
     try {
-      const url = `${BASE_URL}/account/${import.meta.env.VITE_TMDB_ACCOUNT_ID}/rated/movies?page=${page}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/account/ratings?page=${page}`);
     } catch (error) {
       logError('fetchRatedMovies', error);
       throw error;
@@ -318,20 +190,11 @@ export class ApiService {
   }
 
   /**
-   * Fetch user's movie lists
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
+   * Fetch user's movie lists (TMDB)
    */
   static async fetchMovieLists(page = 1) {
     try {
-      const url = `${BASE_URL}/account/${import.meta.env.VITE_TMDB_ACCOUNT_ID}/lists?page=${page}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/account/lists?page=${page}`);
     } catch (error) {
       logError('fetchMovieLists', error);
       throw error;
@@ -339,21 +202,11 @@ export class ApiService {
   }
 
   /**
-   * Fetch details of a specific list
-   * @param {number} listId - ID of the list
-   * @param {number} page - Page number to fetch
-   * @returns {Promise<Object>} Response from API
+   * Fetch details of a specific list (TMDB)
    */
   static async fetchListDetails(listId, page = 1) {
     try {
-      const url = `${BASE_URL_V4}/list/${listId}?page=${page}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      return await this.fetchViaProxy(`/account/list/${listId}?page=${page}`);
     } catch (error) {
       logError('fetchListDetails', error);
       throw error;
@@ -361,20 +214,13 @@ export class ApiService {
   }
 
   /**
-   * Fetch details for a specific movie
-   * @param {number} movieId - ID of the movie
-   * @returns {Promise<Object>} Response from API
+   * Fetch details for a specific movie (TMDB)
    */
-  static async fetchMovieDetails(movieId) {
+  static async fetchMovieDetails(movieId, params = {}) {
     try {
-      const url = `${BASE_URL}/movie/${movieId}`;
-      const options = {
-        method: 'GET',
-        headers: getAuthHeaders()
-      };
-
-      const response = await fetch(url, options);
-      return await handleApiResponse(response);
+      const queryParams = new URLSearchParams(params).toString();
+      const path = `/movie/${movieId}${queryParams ? `?${queryParams}` : ''}`;
+      return await this.fetchViaProxy(path);
     } catch (error) {
       logError('fetchMovieDetails', error);
       throw error;
