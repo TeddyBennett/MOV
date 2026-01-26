@@ -9,7 +9,7 @@
     "dev:dev": "dotenv -e .env.dev -- nodemon --exec ts-node server.ts",
     "dev:prod": "dotenv -e .env.prod -- nodemon --exec ts-node server.ts",
     "prisma:studio": "dotenv -e .env.prod -- prisma studio",
-    "build": "tsc && npx prisma generate",
+    "build": "node build.js && npx prisma generate",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma:migrate": "dotenv -e .env.prod -- prisma migrate dev"
@@ -36,6 +36,7 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
+    "esbuild": "^0.27.2",
     "prisma": "^7.3.0"
   }
 }
