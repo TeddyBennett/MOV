@@ -9,7 +9,7 @@
     "dev:dev": "dotenv -e .env.dev -- nodemon --exec tsx server.ts",
     "dev:prod": "dotenv -e .env.prod -- nodemon --exec tsx server.ts",
     "prisma:studio": "dotenv -e .env.prod -- prisma studio",
-    "build": "node build.cjs && npx prisma generate",
+    "build": "node build.cjs && npx prisma generate && npx prisma migrate deploy",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma:migrate": "dotenv -e .env.prod -- prisma migrate dev"
