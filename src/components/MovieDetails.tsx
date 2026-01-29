@@ -37,16 +37,16 @@ interface MovieDetailsData extends Movie {
 const MovieDetailsSkeleton = () => (
     <div className="relative z-10 mb-8 animate-pulse max-w-[1248px] mx-auto overflow-hidden rounded-xl">
         {/* Hero Section Skeleton */}
-        <div className="w-full h-96 md:h-[500px] bg-gray-800 relative">
-            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-end">
-                    <div className="md:mr-8 mb-4 md:mb-0">
+        <div className="w-full min-h-[500px] md:h-[600px] bg-gray-800 relative flex items-end">
+            <div className="relative z-10 w-full p-6 md:p-10">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end">
+                    <div className="md:mr-8 mb-6 md:mb-0">
                         <div className="w-48 h-72 bg-gray-700 rounded-lg shadow-2xl"></div>
                     </div>
-                    <div className="flex-1 text-white w-full">
-                        <div className="h-10 bg-gray-700 rounded w-3/4 mb-4"></div>
-                        <div className="h-6 bg-gray-700 rounded w-1/2 mb-6"></div>
-                        <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex-1 text-center md:text-left w-full">
+                        <div className="h-10 bg-gray-700 rounded w-3/4 mb-4 mx-auto md:mx-0"></div>
+                        <div className="h-6 bg-gray-700 rounded w-1/2 mb-6 mx-auto md:mx-0"></div>
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                             <div className="h-8 bg-gray-700 rounded-full w-24"></div>
                             <div className="h-8 bg-gray-700 rounded-full w-20"></div>
                             <div className="h-8 bg-gray-700 rounded-full w-28"></div>
@@ -253,84 +253,84 @@ const MovieDetails: React.FC = () => {
       {/* Hero Section */}
       <div className="relative z-10">
         <div
-          className="w-full mx-auto px-4 py-8 h-96 md:h-[500px] bg-cover bg-top relative overflow-hidden"
+          className="w-full min-h-[500px] md:h-[600px] bg-cover bg-center relative overflow-hidden flex items-end"
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10">
-            <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start">
-              <div className="md:mr-8 mb-4 md:mb-0">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f10] via-[#0f0f10]/40 to-transparent z-0"></div>
+          <div className="relative z-10 w-full p-6 md:p-10">
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end">
+              <div className="md:mr-8 mb-6 md:mb-0">
                 <img
                   src={poster_path ? `https://image.tmdb.org/t/p/w300${poster_path}` : noPosterH}
                   alt={title}
-                  className="w-48 h-72 object-cover rounded-lg shadow-2xl relative z-20"
+                  className="w-48 h-72 object-cover rounded-lg shadow-2xl relative z-20 border border-white/10"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = noPosterH;
                   }}
                 />
               </div>
 
-              <div className="flex-1 text-white relative z-20">
-                <h1 className="text-3xl md:text-5xl font-bold mb-2">{title}</h1>
+              <div className="flex-1 text-center md:text-left text-white relative z-20">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-3 drop-shadow-lg tracking-tight">{title}</h1>
 
                 {tagline && (
-                  <p className="italic text-gray-300 mb-4 text-lg">"{tagline}"</p>
+                  <p className="italic text-gray-300 mb-6 text-lg md:text-xl font-medium">"{tagline}"</p>
                 )}
 
-                <div className="flex flex-wrap items-center gap-4 mb-4">
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-6">
                   {vote_average > 0 && (
-                    <div className="flex items-center bg-yellow-600 bg-opacity-20 px-3 py-1 rounded-full">
-                      <BsStarFill className="text-yellow-400 mr-1" />
-                      <span className="font-semibold">{vote_average.toFixed(1)}</span>
+                    <div className="flex items-center bg-yellow-500/20 backdrop-blur-md border border-yellow-500/30 px-4 py-1.5 rounded-full">
+                      <BsStarFill className="text-yellow-400 mr-2" />
+                      <span className="font-bold text-yellow-500">{vote_average.toFixed(1)}</span>
                     </div>
                   )}
 
                   {release_date && (
-                    <div className="flex items-center">
-                      <BsCalendar className="mr-1 text-gray-400" />
+                    <div className="flex items-center text-gray-300 font-medium">
+                      <BsCalendar className="mr-2 text-indigo-400" />
                       <span>{new Date(release_date).getFullYear()}</span>
                     </div>
                   )}
 
                   {runtime && (
-                    <div className="flex items-center">
-                      <BsClock className="mr-1 text-gray-400" />
+                    <div className="flex items-center text-gray-300 font-medium">
+                      <BsClock className="mr-2 text-indigo-400" />
                       <span>{runtime} min</span>
                     </div>
                   )}
                 </div>
 
                 {genres && (genres as Genre[]).length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-8">
                     {(genres as Genre[]).map((genre) => (
                       <span
                         key={genre.id}
-                        className="px-3 py-1 bg-gray-800 bg-opacity-50 rounded-full text-sm"
+                        className="px-4 py-1.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-xs font-bold tracking-wider text-gray-300"
                       >
-                        {genre.name}
+                        {genre.name.toUpperCase()}
                       </span>
                     ))}
                   </div>
                 )}
 
-                <div className="flex gap-3">
+                <div className="flex flex-wrap justify-center md:justify-start gap-4">
                   <button
                     onClick={handleFavoriteClick}
-                    className={`${isFavorite ? 'bg-red-700' : 'bg-red-600'} hover:bg-red-700 text-white px-6 py-2 rounded-lg flex items-center transition-colors`}
+                    className={`${isFavorite ? 'bg-red-600 shadow-red-600/20' : 'bg-white/10 hover:bg-red-600 shadow-black/20'} backdrop-blur-md px-8 py-3 rounded-xl flex items-center transition-all duration-300 font-bold text-sm shadow-xl hover:scale-105 active:scale-95`}
                   >
-                    <BsFillHeartFill className={`mr-2 ${isFavorite ? 'text-pink-400' : 'text-white'}`} />
-                    {isFavorite ? 'Remove Favorite' : 'Add Favorite'}
+                    <BsFillHeartFill className={`mr-2 ${isFavorite ? 'text-white' : 'text-red-500'}`} />
+                    {isFavorite ? 'REMOVE' : 'FAVORITE'}
                   </button>
                   <button
                     onClick={handleWatchlistClick}
-                    className={`${isWatchlist ? 'bg-blue-700' : 'bg-blue-600'} hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center transition-colors`}
+                    className={`${isWatchlist ? 'bg-indigo-600 shadow-indigo-600/20' : 'bg-white/10 hover:bg-indigo-600 shadow-black/20'} backdrop-blur-md px-8 py-3 rounded-xl flex items-center transition-all duration-300 font-bold text-sm shadow-xl hover:scale-105 active:scale-95`}
                   >
                     {isWatchlist ? (
-                      <BsBookmarkFill className="mr-2 text-orange-500" />
+                      <BsBookmarkFill className="mr-2 text-white" />
                     ) : (
-                      <BsFillBookmarkPlusFill className="mr-2 text-white" />
+                      <BsFillBookmarkPlusFill className="mr-2 text-indigo-400" />
                     )}
-                    {isWatchlist ? 'In Watchlist' : 'Add Watchlist'}
+                    {isWatchlist ? 'WATCHED' : 'WATCHLIST'}
                   </button>
                 </div>
               </div>
