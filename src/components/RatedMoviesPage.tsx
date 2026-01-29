@@ -62,7 +62,7 @@ const RatedMoviesPage: React.FC = () => {
     const skeletonCount = ratedMoviesCount > 0 ? ratedMoviesCount : 12; // Default to 12 if no ratings
 
     return (
-        <div className="rated-movies-page min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent">
             <header className="p-8 text-center bg-gradient-to-b from-indigo-900/20 to-transparent">
                 <h1 className="text-4xl font-bold text-white mb-2">My Rated Movies</h1>
                 <p className="text-gray-400">Movies you have shared your thoughts on.</p>

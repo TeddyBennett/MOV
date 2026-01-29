@@ -58,7 +58,7 @@ const FavoritesPage: React.FC = () => {
     const skeletonCount = favoriteCount > 0 ? favoriteCount : 12; // Default to 12 if no favorites
 
     return (
-        <div className="favorites-page min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent">
             <header className="p-8 text-center">
                 <h1 className="text-4xl font-bold text-white mb-2">My Favorites</h1>
                 <p className="text-gray-400">Movies you've saved to your collection</p>

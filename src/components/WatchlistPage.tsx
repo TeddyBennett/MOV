@@ -58,7 +58,7 @@ const WatchlistPage: React.FC = () => {
     const skeletonCount = watchlistCount > 0 ? watchlistCount : 12; // Default to 12 if no watchlist items
 
     return (
-        <div className="watchlist-page min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent">
             <header className="p-8 text-center">
                 <h1 className="text-4xl font-bold text-white mb-2">My Watchlist</h1>
                 <p className="text-gray-400">Movies you're planning to watch</p>

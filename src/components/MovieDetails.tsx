@@ -34,105 +34,149 @@ interface MovieDetailsData extends Movie {
     };
 }
 
-const MovieDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const { movieDataOperations } = useDataContext();
-  const { showCustomToast, showErrorToast } = useCustomToast();
-  const navigate = useNavigate();
-  const [movie, setMovie] = useState<MovieDetailsData | null>(null);
-  const [cast, setCast] = useState<CastMember[]>([]);
-  const [recommended, setRecommended] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const MovieDetailsSkeleton = () => (
+    <div className="relative z-10 mb-8 animate-pulse max-w-[1248px] mx-auto overflow-hidden rounded-xl">
+        {/* Hero Section Skeleton */}
+        <div className="w-full h-96 md:h-[500px] bg-gray-800 relative">
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-end">
+                    <div className="md:mr-8 mb-4 md:mb-0">
+                        <div className="w-48 h-72 bg-gray-700 rounded-lg shadow-2xl"></div>
+                    </div>
+                    <div className="flex-1 text-white w-full">
+                        <div className="h-10 bg-gray-700 rounded w-3/4 mb-4"></div>
+                        <div className="h-6 bg-gray-700 rounded w-1/2 mb-6"></div>
+                        <div className="flex flex-wrap items-center gap-4">
+                            <div className="h-8 bg-gray-700 rounded-full w-24"></div>
+                            <div className="h-8 bg-gray-700 rounded-full w-20"></div>
+                            <div className="h-8 bg-gray-700 rounded-full w-28"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/* Main Content Skeleton */}
+        <div className="container mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2">
+                    <div className="h-8 bg-gray-700 rounded w-1/4 mb-4"></div>
+                    <div className="h-24 bg-gray-700 rounded mb-8"></div>
+                    <div className="h-8 bg-gray-700 rounded w-1/4 mb-4"></div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        {[...Array(5)].map((_, i) => (
+                            <div key={i} className="text-center">
+                                <div className="w-24 h-24 bg-gray-700 rounded-full mx-auto mb-2"></div>
+                                <div className="h-4 bg-gray-700 rounded w-20 mx-auto"></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="lg:col-span-1">
+                    <div className="bg-gray-800 bg-opacity-50 rounded-lg p-6">
+                        <div className="h-6 bg-gray-700 rounded w-1/3 mb-6"></div>
+                        <div className="h-12 bg-gray-700 rounded mb-4"></div>
+                        <div className="h-12 bg-gray-700 rounded mb-4"></div>
+                        <div className="h-12 bg-gray-700 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
 
-  useEffect(() => {
-    const fetchMovieDetails = async () => {
-      if (!id) return;
-      try {
+const MovieDetails: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const { movieDataOperations } = useDataContext();
+    const { showCustomToast, showErrorToast } = useCustomToast();
+    const navigate = useNavigate();
+    const [movie, setMovie] = useState<MovieDetailsData | null>(null);
+    const [cast, setCast] = useState<CastMember[]>([]);
+    const [recommended, setRecommended] = useState<Movie[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        // When ID changes, reset the state to show loading skeleton immediately
+        setMovie(null);
+        setCast([]);
+        setRecommended([]);
+        setError(null);
         setIsLoading(true);
 
-        // Fetch movie details via proxy
-        const movieData = await ApiService.fetchMovieDetails(id, {
-          append_to_response: 'credits,recommendations'
-        });
+        const fetchMovieDetails = async () => {
+            if (!id) return;
+            try {
+                // Fetch movie details via proxy
+                const movieData = await ApiService.fetchMovieDetails(id, {
+                    append_to_response: 'credits,recommendations'
+                });
 
-        setMovie(movieData);
+                setMovie(movieData);
 
-        // Fetch cast members (top 10)
-        if (movieData.credits?.cast) {
-          setCast(movieData.credits.cast.slice(0, 10));
-        }
+                // Fetch cast members (top 10)
+                if (movieData.credits?.cast) {
+                    setCast(movieData.credits.cast.slice(0, 10));
+                }
 
-        // Fetch recommended movies
-        if (movieData.recommendations?.results) {
-          setRecommended(movieData.recommendations.results.slice(0, 6));
-        }
-      } catch (err: any) {
-        setError(err.message);
-        showErrorToast("Failed to load movie details. Please try again.", "LOAD ERROR");
-      } finally {
-        setIsLoading(false);
-      }
+                // Fetch recommended movies
+                if (movieData.recommendations?.results) {
+                    setRecommended(movieData.recommendations.results.slice(0, 6));
+                }
+            } catch (err: any) {
+                setError(err.message);
+                showErrorToast("Failed to load movie details. Please try again.", "LOAD ERROR");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchMovieDetails();
+    }, [id, showErrorToast]);
+
+    const handleGoBack = () => {
+        navigate(-1);
     };
 
-    fetchMovieDetails();
-  }, [id, showErrorToast]);
+    if (isLoading) {
+        return <MovieDetailsSkeleton />;
+    }
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+    if (error) {
+        return (
+            <div className="relative z-10 mb-8 error max-w-[1248px] mx-auto overflow-hidden rounded-xl">
+                <div className="container mx-auto px-4 py-8">
+                    <div className="text-center text-white">
+                        <h2 className="text-2xl font-bold text-red-500 mb-4">Error Loading Movie</h2>
+                        <p className="text-gray-400 mb-6">{error}</p>
+                        <button
+                            onClick={handleGoBack}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center mx-auto"
+                        >
+                            <BsChevronLeft className="mr-2" /> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
-  if (isLoading) {
-    return (
-      <div className="movie-details-page loading">
-        <div className="container mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="bg-gray-700 h-96 rounded-lg mb-6"></div>
-            <div className="h-8 bg-gray-700 rounded w-1/3 mb-4"></div>
-            <div className="h-4 bg-gray-700 rounded w-1/2 mb-2"></div>
-            <div className="h-4 bg-gray-700 rounded w-3/4 mb-6"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="movie-details-page error">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-red-500 mb-4">Error Loading Movie</h2>
-            <p className="text-gray-400 mb-6">{error}</p>
-            <button
-              onClick={handleGoBack}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center mx-auto"
-            >
-              <BsChevronLeft className="mr-2" /> Back to Movies
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!movie) {
-    return (
-      <div className="movie-details-page">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-300 mb-4">Movie Not Found</h2>
-            <button
-              onClick={handleGoBack}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center mx-auto"
-            >
-              <BsChevronLeft className="mr-2" /> Back to Movies
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    if (!movie) {
+        return (
+            <div className="relative z-10 mb-8 max-w-[1248px] mx-auto overflow-hidden rounded-xl">
+                <div className="container mx-auto px-4 py-8">
+                    <div className="text-center">
+                        <h2 className="text-2xl font-bold text-gray-300 mb-4">Movie Not Found</h2>
+                        <button
+                            onClick={handleGoBack}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center mx-auto"
+                        >
+                            <BsChevronLeft className="mr-2" /> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
   const {
     title,
@@ -205,11 +249,11 @@ const MovieDetails: React.FC = () => {
     }
   }
   return (
-    <div className="movie-details-page">
+    <div className="relative z-10 mb-8 max-w-[1248px] mx-auto overflow-hidden rounded-xl">
       {/* Hero Section */}
       <div className="relative z-10">
         <div
-          className="w-full h-96 md:h-[500px] bg-cover bg-center relative overflow-hidden"
+          className="w-full mx-auto px-4 py-8 h-96 md:h-[500px] bg-cover bg-top relative overflow-hidden"
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>

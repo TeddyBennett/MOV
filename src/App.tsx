@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import './App.css';
 import Header from './components/Header';
 import Content from './components/Content';
 import { useDebounce } from 'use-debounce';
@@ -160,6 +159,9 @@ const App: React.FC = () => {
     const prevPathname = useRef<string>(location.pathname);
 
     useEffect(() => {
+        // Scroll to top on any route change
+        window.scrollTo(0, 0);
+
         if (prevPathname.current !== location.pathname) {
             resetState();
             prevPathname.current = location.pathname;
@@ -170,6 +172,7 @@ const App: React.FC = () => {
         }
     }, [location]);
 
+    const showPagination = ['/', '/favorites', '/watchlist', '/rated-movies', '/trending-day', '/trending-week'].includes(location.pathname) || location.pathname.startsWith('/list/');
 
     return (
         <>
@@ -194,7 +197,7 @@ const App: React.FC = () => {
                 <Route path="/movie/:id" element={<MovieDetails />} />
             </Routes>
 
-            {movies && movies.length > 0 && (
+            {showPagination && movies && movies.length > 0 && (
                 <Pagination
                     totalPages={totalPages}
                     currentPage={currentPage}

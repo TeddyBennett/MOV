@@ -132,27 +132,30 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     };
 
     return (
-        <div className="movie-card relative group">
-            <Link to={`/movie/${id}`} className="movie-link block overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
-                <div className="movie-image-container aspect-[2/3]  overflow-hidden">
+        <div className="relative group animate-cardAppear">
+            <Link 
+                to={`/movie/${id}`} 
+                className="block overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-2 hover:scale-[1.03] bg-gradient-to-br from-[#2a2a3a] to-[#1a1a2e]"
+            >
+                <div className="aspect-[2/3] overflow-hidden">
                     <img
                         src={posterUrl}
-                        className="movie-img object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500"
+                        className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500"
                         title={movieTitle}
                         alt={movieTitle}
                     />
                 </div>
-                <div className="movie-data-container p-3 bg-gray-900/90 backdrop-blur-sm">
-                    <div className="movie-title text-sm font-bold text-white truncate mb-1" title={movieTitle}>
+                <div className="p-3 bg-gray-900/90 backdrop-blur-sm">
+                    <div className="text-sm font-bold text-white truncate mb-1 opacity-80 group-hover:opacity-100 transition-opacity" title={movieTitle}>
                         {movieTitle}
                     </div>
-                    <div className="movie-details  flex items-center gap-1 text-[10px] text-gray-400">
-                        <span className="star-icon"><BsStarFill size={12} className="text-yellow-400" /></span>
-                        <strong className="score text-white font-medium">{scoreFormat(score)}</strong>
-                        <span>•</span>
-                        <span className="language uppercase">{originalLang}</span>
-                        <span>•</span>
-                        <span className="year">{releaseDate}</span>
+                    <div className="flex items-center gap-1 text-[10px] text-gray-400 font-mono">
+                        <span className="inline-block mr-1"><BsStarFill size={12} className="text-yellow-400" /></span>
+                        <strong className="text-white font-medium">{scoreFormat(score)}</strong>
+                        <span className="text-gray-500">•</span>
+                        <span className="uppercase">{originalLang}</span>
+                        <span className="text-gray-500">•</span>
+                        <span className="text-gray-400">{releaseDate}</span>
                     </div>
                 </div>
             </Link>

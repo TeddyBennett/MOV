@@ -32,7 +32,7 @@ const MovieGrid: React.FC = () => {
     const processedMovies = movieDataOperations.getProcessedMovies(movies, NoPosterH);
 
     return (
-        <div className={`movie-container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-5 max-w-[1248px] w-full mx-auto ${!isHome ? 'pt-5' : ''}`}>
+        <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-5 max-w-[1248px] w-full mx-auto ${!isHome ? 'pt-5' : ''}`}>
             {processedMovies.length > 0 ? (
                 processedMovies.map((movie: any) => (
                     <MovieCard

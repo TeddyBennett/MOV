@@ -5,17 +5,17 @@ import {
     BsCheckCircleFill,
     BsExclamationCircleFill
 } from "react-icons/bs";
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 
 export type ToastVariant = "info" | "destructive" | "success" | "warning" | "default";
 
 export const useCustomToast = () => {
     const { toast } = useToast();
 
-    const showCustomToast = (
-        title: string, 
-        operation: string, 
-        variantMode: ToastVariant, 
+    const showCustomToast = useCallback((
+        title: string,
+        operation: string,
+        variantMode: ToastVariant,
         toastTitle: string = 'UPDATE'
     ) => {
         const Icons = {
@@ -42,9 +42,9 @@ export const useCustomToast = () => {
             ),
             variant: variantMode as any,
         });
-    };
+    }, [toast]);
 
-    const showErrorToast = (message: string, toastTitle: string = 'ERROR') => {
+    const showErrorToast = useCallback((message: string, toastTitle: string = 'ERROR') => {
         toast({
             title: toastTitle,
             description: (
@@ -55,7 +55,7 @@ export const useCustomToast = () => {
             ),
             variant: "destructive",
         });
-    };
+    }, [toast]);
 
     return { showCustomToast, showErrorToast };
 };

@@ -37,8 +37,8 @@ const Content: React.FC<ContentProps> = ({
         : [];
 
     return (
-        <main className="main-flex-container">
-            <div className="trend-movies-container">
+        <main className="relative w-full max-w-[1248px] mt-[10px] mx-auto px-4">
+            <div className="mb-8">
                 <header className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold text-white tracking-tight">Top Trending Now</h2>
                     {location.pathname === "/" && (
@@ -81,7 +81,7 @@ const Content: React.FC<ContentProps> = ({
                         <p className="text-gray-400 max-w-xs mx-auto">Check back later to see what's trending across the platform!</p>
                     </div>
                 ) : (
-                    <ul className="trend-movies-grid">
+                    <ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 list-none p-0 m-0">
                         {trendTopMovies.map((movie, index) => {
                             const imgUrl = movie.poster_path
                                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -89,11 +89,11 @@ const Content: React.FC<ContentProps> = ({
 
                             return (
                                 <Link key={`${movie.id}-${index}`} to={`/movie/${movie.id}`} className="group relative block transition-all hover:scale-105">
-                                    <li className="trend-movie-card bg-gray-900/40 rounded-2xl overflow-hidden border border-gray-800/50 hover:border-indigo-500/50 transition-colors">
+                                    <li className="relative bg-gray-900/40 rounded-2xl overflow-hidden border border-gray-800/50 hover:border-indigo-500/50 transition-colors shadow-md hover:shadow-xl">
                                         <div className="absolute top-3 left-3 z-20 bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-lg shadow-indigo-600/30">
                                             {index + 1}
                                         </div>
-                                        <div className="trend-movie-poster overflow-hidden">
+                                        <div className="h-[180px] overflow-hidden">
                                             <img
                                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                                 src={imgUrl}

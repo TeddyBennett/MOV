@@ -64,7 +64,7 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
         }}>
             <DropdownMenuTrigger asChild>
                 <button className="flex absolute top-5 right-4 items-center justify-center bg-transparent border-none p-0 m-0">
-                    <BsThreeDotsVertical className='favorite-movies cursor-pointer' size='28' color='black' />
+                    <BsThreeDotsVertical className='cursor-pointer border-2 border-[hsl(338,13%,84%)] opacity-80 bg-white rounded-full p-[5px] transition-all duration-300 hover:scale-110' size='28' color='black' />
                 </button>
             </DropdownMenuTrigger>
 

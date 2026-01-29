@@ -37,8 +37,8 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, setSearchTerm }) => {
     };
 
     return (
-        <header className='header-flex-container relative min-h-[400px] flex flex-col items-center justify-center overflow-hidden'>
-            <div className="user-profile-header absolute top-2 right-0 z-50 flex items-center gap-3">
+        <header className='relative min-h-[400px] flex flex-col items-center justify-center overflow-hidden text-center p-4 mb-8 max-w-[1248px] mx-auto animate-fadeInDown'>
+            <div className="absolute top-2 right-0 z-50 flex items-center gap-3">
                 {loading ? (
                     <div className="animate-pulse bg-gray-700 h-8 w-8 rounded-full"></div>
                 ) : isAuthenticated && user ? (

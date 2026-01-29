@@ -93,7 +93,7 @@ const ListPage: React.FC = () => {
     };
 
     return (
-        <div className="list-page min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent mt-5">
             <header className="p-8 flex flex-col items-center">
                 <div className="flex items-center gap-4 mb-2">
                     <h1 className="text-4xl font-bold text-white">{listDetails.name || 'Loading List...'}</h1>

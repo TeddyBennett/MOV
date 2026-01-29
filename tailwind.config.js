@@ -63,7 +63,48 @@ export default {
 					'4': 'hsl(var(--chart-4))',
 					'5': 'hsl(var(--chart-5))'
 				}
-			}
+			},
+			keyframes: {
+				fadeInDown: {
+					'0%': { opacity: '0', transform: 'translateY(-20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+				float: {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+				pulse: {
+					'0%': { boxShadow: '0 0 0 0 rgba(171, 139, 255, 0.4)' },
+					'70%': { boxShadow: '0 0 0 10px rgba(171, 139, 255, 0)' },
+					'100%': { boxShadow: '0 0 0 0 rgba(171, 139, 255, 0)' },
+				},
+				slideInLeft: {
+					'0%': { opacity: '0', transform: 'translateX(-20px)' },
+					'100%': { opacity: '1', transform: 'translateX(0)' },
+				},
+				slideInRight: {
+					'0%': { opacity: '0', transform: 'translateX(20px)' },
+					'100%': { opacity: '1', transform: 'translateX(0)' },
+				},
+				bounce: {
+					'0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
+					'40%': { transform: 'translateY(-10px)' },
+					'60%': { transform: 'translateY(-5px)' },
+				},
+				cardAppear: {
+					'0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
+					'100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+				},
+			},
+			animation: {
+				fadeInDown: 'fadeInDown 0.8s ease-out',
+				float: 'float 3s ease-in-out infinite',
+				pulse: 'pulse 2s infinite',
+				slideInLeft: 'slideInLeft 0.5s ease-out',
+				slideInRight: 'slideInRight 0.5s ease-out',
+				bounce: 'bounce 2s infinite',
+				cardAppear: 'cardAppear 0.5s ease-out forwards',
+			},
 		}
 	},
 	plugins: [

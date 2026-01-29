@@ -57,3 +57,23 @@
 .pagination button:last-child:hover:not(:disabled) {
   background: rgba(171, 139, 255, 0.2);
 }
+
+@media (max-width: 768px) {
+  .pagination button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    min-width: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 5px;
+  }
+
+  .pagination button {
+    padding: 7px 10px;
+    font-size: 0.8rem;
+    min-width: 30px;
+  }
+}
