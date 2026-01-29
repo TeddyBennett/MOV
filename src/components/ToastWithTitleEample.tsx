@@ -2,8 +2,14 @@
 
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/Button"
+import React from 'react';
 
-function ToastWithTitle(props) {
+interface ToastWithTitleProps {
+    title: string;
+    body: string;
+}
+
+const ToastWithTitle: React.FC<ToastWithTitleProps> = (props) => {
   const { toast } = useToast()
 
   return (

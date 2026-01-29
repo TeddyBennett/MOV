@@ -1,6 +1,6 @@
-// src/services/apiService.js
+// src/services/apiService.ts
 // Single Responsibility: Handle all API communications with TMDB via Backend Proxy
-import { handleApiResponse, logError } from '../utils/errorHandler';
+import { logError } from '../utils/errorHandler';
 import { BackendApiService } from './backendApiService';
 
 const PROXY_BASE_URL = '/api/tmdb';
@@ -12,14 +12,14 @@ export class ApiService {
   /**
    * Helper to perform fetch via backend proxy
    */
-  static async fetchViaProxy(path, options = {}) {
+  static async fetchViaProxy(path: string, options: RequestInit = {}): Promise<any> {
     return BackendApiService.fetchWithAuth(`${PROXY_BASE_URL}${path}`, options);
   }
 
   /**
    * Fetch popular movies
    */
-  static async fetchPopularMovies(page = 1) {
+  static async fetchPopularMovies(page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/popular?page=${page}`);
     } catch (error) {
@@ -31,7 +31,7 @@ export class ApiService {
   /**
    * Search movies by query
    */
-  static async searchMovies(query, page = 1) {
+  static async searchMovies(query: string, page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/search?query=${encodeURIComponent(query)}&page=${page}`);
     } catch (error) {
@@ -43,7 +43,7 @@ export class ApiService {
   /**
    * Fetch movies by genre
    */
-  static async fetchMoviesByGenre(genreId, page = 1) {
+  static async fetchMoviesByGenre(genreId: number | string, page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/genre/${genreId}?page=${page}`);
     } catch (error) {
@@ -55,7 +55,7 @@ export class ApiService {
   /**
    * Add/remove movie from favorites (TMDB)
    */
-  static async updateFavorite(movieId, favorite) {
+  static async updateFavorite(movieId: number, favorite: boolean): Promise<any> {
     try {
       return await this.fetchViaProxy(`/favorite`, {
         method: 'POST',
@@ -70,7 +70,7 @@ export class ApiService {
   /**
    * Add/remove movie from watchlist (TMDB)
    */
-  static async updateWatchlist(movieId, watchlist) {
+  static async updateWatchlist(movieId: number, watchlist: boolean): Promise<any> {
     try {
       return await this.fetchViaProxy(`/watchlist`, {
         method: 'POST',
@@ -85,7 +85,7 @@ export class ApiService {
   /**
    * Rate a movie (TMDB)
    */
-  static async rateMovie(movieId, rating) {
+  static async rateMovie(movieId: number, rating: number): Promise<any> {
     try {
       return await this.fetchViaProxy(`/rating`, {
         method: 'POST',
@@ -100,7 +100,7 @@ export class ApiService {
   /**
    * Delete movie rating (TMDB)
    */
-  static async deleteRating(movieId) {
+  static async deleteRating(movieId: number): Promise<any> {
     try {
       return await this.fetchViaProxy(`/rating/${movieId}`, {
         method: 'DELETE'
@@ -114,7 +114,7 @@ export class ApiService {
   /**
    * Add movie to a list (TMDB)
    */
-  static async addMovieToList(listId, movieId) {
+  static async addMovieToList(listId: number | string, movieId: number): Promise<any> {
     try {
       return await this.fetchViaProxy(`/list/${listId}/movies`, {
         method: 'POST',
@@ -129,7 +129,7 @@ export class ApiService {
   /**
    * Remove movie from a list (TMDB)
    */
-  static async removeMovieFromList(listId, movieId) {
+  static async removeMovieFromList(listId: number | string, movieId: number): Promise<any> {
     try {
       return await this.fetchViaProxy(`/list/${listId}/movies`, {
         method: 'DELETE',
@@ -144,7 +144,7 @@ export class ApiService {
   /**
    * Check if movie is in a list (TMDB)
    */
-  static async isMovieInList(listId, movieId) {
+  static async isMovieInList(listId: number | string, movieId: number): Promise<any> {
     try {
       return await this.fetchViaProxy(`/account/list/${listId}`); // We can filter client-side or add endpoint
     } catch (error) {
@@ -156,7 +156,7 @@ export class ApiService {
   /**
    * Fetch user's favorite movies (TMDB)
    */
-  static async fetchFavoriteMovies(page = 1) {
+  static async fetchFavoriteMovies(page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/account/favorites?page=${page}`);
     } catch (error) {
@@ -168,7 +168,7 @@ export class ApiService {
   /**
    * Fetch user's watchlist movies (TMDB)
    */
-  static async fetchWatchlistMovies(page = 1) {
+  static async fetchWatchlistMovies(page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/account/watchlist?page=${page}`);
     } catch (error) {
@@ -180,7 +180,7 @@ export class ApiService {
   /**
    * Fetch user's rated movies (TMDB)
    */
-  static async fetchRatedMovies(page = 1) {
+  static async fetchRatedMovies(page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/account/ratings?page=${page}`);
     } catch (error) {
@@ -192,7 +192,7 @@ export class ApiService {
   /**
    * Fetch user's movie lists (TMDB)
    */
-  static async fetchMovieLists(page = 1) {
+  static async fetchMovieLists(page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/account/lists?page=${page}`);
     } catch (error) {
@@ -204,7 +204,7 @@ export class ApiService {
   /**
    * Fetch details of a specific list (TMDB)
    */
-  static async fetchListDetails(listId, page = 1) {
+  static async fetchListDetails(listId: number | string, page: number = 1): Promise<any> {
     try {
       return await this.fetchViaProxy(`/account/list/${listId}?page=${page}`);
     } catch (error) {
@@ -216,7 +216,7 @@ export class ApiService {
   /**
    * Fetch details for a specific movie (TMDB)
    */
-  static async fetchMovieDetails(movieId, params = {}) {
+  static async fetchMovieDetails(movieId: number | string, params: Record<string, string> = {}): Promise<any> {
     try {
       const queryParams = new URLSearchParams(params).toString();
       const path = `/movie/${movieId}${queryParams ? `?${queryParams}` : ''}`;

@@ -41,8 +41,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     const handleSaveFavorite = async () => {
         try {
             const success = isFavorite
-                ? await movieDataOperations.removeFromFavorites(id, movieTitle)
-                : await movieDataOperations.addToFavorites(id, movieTitle);
+                ? await movieDataOperations.removeFromFavorites(id)
+                : await movieDataOperations.addToFavorites(id);
 
             if (success) {
                 const operation = isFavorite ? "removed from Favorite" : "added to Favorite";
@@ -58,8 +58,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     const handleSaveWatchlist = async () => {
         try {
             const success = isWatchlist
-                ? await movieDataOperations.removeFromWatchlist(id, movieTitle)
-                : await movieDataOperations.addToWatchlist(id, movieTitle);
+                ? await movieDataOperations.removeFromWatchlist(id)
+                : await movieDataOperations.addToWatchlist(id);
 
             if (success) {
                 const operation = isWatchlist ? "removed from Watchlist" : "added to Watchlist";
@@ -161,7 +161,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                 movieID={id}
                 isFavorite={isFavorite}
                 isWatchlist={isWatchlist}
-                rating={rating}
+                rating={rating || 0}
                 currentRating={currentRating}
                 movieLists={movieDataOperations.getLists()}
                 selectedList={selectedList}

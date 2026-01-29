@@ -1,12 +1,21 @@
-// src/utils/errorHandler.js
+// src/utils/errorHandler.ts
 // Single Responsibility: Handle and format errors consistently across the application
+
+export interface AppError {
+  message: string;
+  code: string;
+  timestamp: string;
+  originalError: any;
+  status?: number;
+  [key: string]: any;
+}
 
 /**
  * Format API error response
- * @param {Object} error - Error object
- * @returns {string} Formatted error message
+ * @param error - Error object
+ * @returns Formatted error message
  */
-export function formatApiError(error) {
+export function formatApiError(error: any): string {
   if (error instanceof TypeError && error.message.includes('fetch')) {
     return 'Network error: Please check your internet connection.';
   }
@@ -25,21 +34,21 @@ export function formatApiError(error) {
 
 /**
  * Log error with context
- * @param {string} context - Context where error occurred
- * @param {Object} error - Error object
+ * @param context - Context where error occurred
+ * @param error - Error object
  */
-export function logError(context, error) {
+export function logError(context: string, error: any): void {
   console.error(`[${context}] Error:`, error);
 }
 
 /**
  * Create a standardized error object
- * @param {string} message - Error message
- * @param {string} code - Error code
- * @param {any} originalError - Original error object
- * @returns {Object} Standardized error object
+ * @param message - Error message
+ * @param code - Error code
+ * @param originalError - Original error object
+ * @returns Standardized error object
  */
-export function createError(message, code = 'UNKNOWN_ERROR', originalError = null) {
+export function createError(message: string, code: string = 'UNKNOWN_ERROR', originalError: any = null): AppError {
   return {
     message,
     code,
@@ -50,10 +59,10 @@ export function createError(message, code = 'UNKNOWN_ERROR', originalError = nul
 
 /**
  * Handle API response and throw appropriate errors
- * @param {Response} response - Fetch response object
- * @returns {Promise<any>} Parsed response data
+ * @param response - Fetch response object
+ * @returns Parsed response data
  */
-export async function handleApiResponse(response) {
+export async function handleApiResponse(response: Response): Promise<any> {
   // 1. Handle Errors Immediately (Fail Fast)
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));

@@ -12,7 +12,7 @@ import { Toaster } from "./components/ui/toaster";
 import FavoritesPage from './components/FavoritesPage';
 import WatchlistPage from './components/WatchlistPage';
 import RatedMoviesPage from './components/RatedMoviesPage';
-import Trendingmovie from './components/trendingmoviepage';
+import TrendingMoviePage from './components/TrendingMoviePage';
 import ListPage from './components/ListPage';
 import { ApiService } from './services/apiService';
 import { logError } from './utils/errorHandler';
@@ -88,7 +88,7 @@ const App: React.FC = () => {
             }
 
             let page = loadedPages.current + 1;
-            let targetPage = page + loadPerPage - 1;
+            const targetPage = page + loadPerPage - 1;
 
             if (filteredMovieRef.current.length > 0 && currentPage < totalPages - 1) {
                 setIsLoading(false);
@@ -188,8 +188,8 @@ const App: React.FC = () => {
                 <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/watchlist" element={<WatchlistPage />} />
                 <Route path="/rated-movies" element={<RatedMoviesPage />} />
-                <Route path="/trending-day" element={<Trendingmovie time="day" />} />
-                <Route path="/trending-week" element={<Trendingmovie time="week" />} />
+                <Route path="/trending-day" element={<TrendingMoviePage time="day" />} />
+                <Route path="/trending-week" element={<TrendingMoviePage time="week" />} />
                 <Route path="/list/:id" element={<ListPage />} />
                 <Route path="/movie/:id" element={<MovieDetails />} />
             </Routes>

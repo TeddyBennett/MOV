@@ -1,22 +1,27 @@
-// src/data/DataContext.jsx
+// src/data/DataContext.tsx
 // Single Responsibility: Provide global state management for the application
-import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from 'react';
 import genres from './genres';
 import { MovieDataService } from '../services/movieDataService';
 import { BackendApiService } from '../services/backendApiService';
+import { DataContextType, Movie, TrendingMovie } from '../types';
 
 // Create a Context
-const DataContext = createContext();
+const DataContext = createContext<DataContextType | undefined>(undefined);
+
+interface DataContextProviderProps {
+  children: ReactNode;
+}
 
 // Create a Provider component
-export const DataContextProvider = ({ children }) => {
+export const DataContextProvider: React.FC<DataContextProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isInitializing, setIsInitializing] = useState(true); // Track user data initialization
   const [currentPage, setCurrentPage] = useState(1);
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [userStatsVersion, setUserStatsVersion] = useState(0); // Trigger re-renders
-  const [trendMovies, setTrendMovies] = useState([]);
+  const [trendMovies, setTrendMovies] = useState<TrendingMovie[]>([]);
 
   // Initialize the movie data service - use useMemo to persist across renders
   const movieDataService = useMemo(() => new MovieDataService(), []);
@@ -35,7 +40,7 @@ export const DataContextProvider = ({ children }) => {
         
         // Fetch Global Trending data from DB
         const trending = await BackendApiService.getTrending().catch(() => []);
-        const formattedTrending = (trending || []).map(m => ({
+        const formattedTrending = (trending || []).map((m: any) => ({
             ...m,
             id: m.movieId // Map movieId to id for frontend compatibility
         }));
@@ -52,7 +57,7 @@ export const DataContextProvider = ({ children }) => {
     initializeData();
   }, [movieDataService, triggerUpdate]);
 
-  const updateTrendMovies = async (firstIndexMovie) => {
+  const updateTrendMovies = async (firstIndexMovie: any) => {
     if (!firstIndexMovie || !firstIndexMovie.id) return;
     
     try {
@@ -67,7 +72,7 @@ export const DataContextProvider = ({ children }) => {
 
         // Re-fetch trending list to keep UI in sync
         const trending = await BackendApiService.getTrending().catch(() => []);
-        const formattedTrending = (trending || []).map(m => ({
+        const formattedTrending = (trending || []).map((m: any) => ({
             ...m,
             id: m.movieId // Map movieId to id for frontend compatibility
         }));
@@ -79,53 +84,53 @@ export const DataContextProvider = ({ children }) => {
 
   // Expose the movie data service methods, wrapped to trigger re-renders
   const movieDataOperations = useMemo(() => ({
-    addToFavorites: async (...args) => {
-      const result = await movieDataService.addToFavorites(...args);
+    addToFavorites: async (movieId: number) => {
+      const result = await movieDataService.addToFavorites(movieId);
       if (result) triggerUpdate();
       return result;
     },
-    removeFromFavorites: async (...args) => {
-      const result = await movieDataService.removeFromFavorites(...args);
+    removeFromFavorites: async (movieId: number) => {
+      const result = await movieDataService.removeFromFavorites(movieId);
       if (result) triggerUpdate();
       return result;
     },
-    addToWatchlist: async (...args) => {
-      const result = await movieDataService.addToWatchlist(...args);
+    addToWatchlist: async (movieId: number) => {
+      const result = await movieDataService.addToWatchlist(movieId);
       if (result) triggerUpdate();
       return result;
     },
-    removeFromWatchlist: async (...args) => {
-      const result = await movieDataService.removeFromWatchlist(...args);
+    removeFromWatchlist: async (movieId: number) => {
+      const result = await movieDataService.removeFromWatchlist(movieId);
       if (result) triggerUpdate();
       return result;
     },
-    rateMovie: async (...args) => {
-      const result = await movieDataService.rateMovie(...args);
+    rateMovie: async (movieId: number, rating: number) => {
+      const result = await movieDataService.rateMovie(movieId, rating);
       if (result) triggerUpdate();
       return result;
     },
-    deleteRating: async (...args) => {
-      const result = await movieDataService.deleteRating(...args);
+    deleteRating: async (movieId: number) => {
+      const result = await movieDataService.deleteRating(movieId);
       if (result) triggerUpdate();
       return result;
     },
-    addMovieToList: async (...args) => {
-      const result = await movieDataService.addMovieToList(...args);
+    addMovieToList: async (listId: number, movieId: number) => {
+      const result = await movieDataService.addMovieToList(listId, movieId);
       if (result) triggerUpdate();
       return result;
     },
-    removeMovieFromList: async (...args) => {
-      const result = await movieDataService.removeMovieFromList(...args);
+    removeMovieFromList: async (listId: number, movieId: number) => {
+      const result = await movieDataService.removeMovieFromList(listId, movieId);
       if (result) triggerUpdate();
       return result;
     },
-    createList: async (...args) => {
-      const result = await movieDataService.createList(...args);
+    createList: async (name: string) => {
+      const result = await movieDataService.createList(name);
       if (result) triggerUpdate();
       return result;
     },
-    deleteList: async (...args) => {
-      const result = await movieDataService.deleteList(...args);
+    deleteList: async (listId: number) => {
+      const result = await movieDataService.deleteList(listId);
       if (result) triggerUpdate();
       return result;
     },
@@ -135,7 +140,7 @@ export const DataContextProvider = ({ children }) => {
     getRatings: movieDataService.getRatings.bind(movieDataService),
     getLists: movieDataService.getLists.bind(movieDataService),
     getMoviesInLists: movieDataService.getMoviesInLists.bind(movieDataService),
-  }), [movieDataService, triggerUpdate, userStatsVersion]);
+  }), [movieDataService, triggerUpdate]);
 
   return (
     <DataContext.Provider value={{
@@ -161,4 +166,10 @@ export const DataContextProvider = ({ children }) => {
 };
 
 // Custom hook to use the context
-export const useDataContext = () => useContext(DataContext);
+export const useDataContext = () => {
+  const context = useContext(DataContext);
+  if (context === undefined) {
+    throw new Error('useDataContext must be used within a DataContextProvider');
+  }
+  return context;
+};

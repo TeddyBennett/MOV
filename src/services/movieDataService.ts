@@ -1,10 +1,17 @@
-import { ApiService } from './apiService';
 import { BackendApiService } from './backendApiService';
+import { Movie, ListInfo, ProcessedMovie } from '../types';
+import { processMoviesWithUserStatus } from '../utils/movieUtils';
 
 /**
  * Service class for managing movie data operations
  */
 export class MovieDataService {
+  private favorites: Set<number>;
+  private watchlist: Set<number>;
+  private ratings: Map<number, number>;
+  private lists: Map<number, ListInfo>;
+  private moviesInLists: Map<number, Set<number>>;
+
   constructor() {
     this.favorites = new Set();
     this.watchlist = new Set();
@@ -16,7 +23,7 @@ export class MovieDataService {
   /**
    * Initialize all user data
    */
-  async initializeUserData() {
+  async initializeUserData(): Promise<void> {
     try {
       // Architect's Note: Check for user session before fetching
       // We catch the error here and return null to prevent 401 logs from bubbling up
@@ -33,7 +40,7 @@ export class MovieDataService {
         this.fetchLists(),
         this.fetchRatings()
       ]);
-    } catch (error) {
+    } catch (error: any) {
       // Only log actual unexpected errors, not simple 401s
       if (error.code !== 'HTTP_401') {
         console.error('[MovieDataService] Unexpected error during initialization:', error);
@@ -44,10 +51,10 @@ export class MovieDataService {
   /**
    * Fetch and store user's favorite movies from our backend
    */
-  async fetchFavorites() {
+  async fetchFavorites(): Promise<void> {
     try {
       const favorites = await BackendApiService.getFavorites();
-      this.favorites = new Set(favorites.map(f => f.movieId));
+      this.favorites = new Set(favorites.map((f: { movieId: number }) => f.movieId));
     } catch (error) {
       console.error('Failed to fetch favorite movies from backend:', error);
     }
@@ -56,10 +63,10 @@ export class MovieDataService {
   /**
    * Fetch and store user's watchlist movies from our backend
    */
-  async fetchWatchlist() {
+  async fetchWatchlist(): Promise<void> {
     try {
       const watchlist = await BackendApiService.getWatchlist();
-      this.watchlist = new Set(watchlist.map(w => w.movieId));
+      this.watchlist = new Set(watchlist.map((w: { movieId: number }) => w.movieId));
     } catch (error) {
       console.error('Failed to fetch watchlist movies from backend:', error);
     }
@@ -68,10 +75,10 @@ export class MovieDataService {
   /**
    * Fetch and store user's rated movies from our backend
    */
-  async fetchRatings() {
+  async fetchRatings(): Promise<void> {
     try {
       const ratings = await BackendApiService.getRatings();
-      const allRatingMovies = new Map();
+      const allRatingMovies = new Map<number, number>();
 
       for (const r of ratings) {
         allRatingMovies.set(r.movieId, r.rating);
@@ -86,11 +93,11 @@ export class MovieDataService {
   /**
    * Fetch and store user's custom movie lists from our backend
    */
-  async fetchLists() {
+  async fetchLists(): Promise<void> {
     try {
       const lists = await BackendApiService.getLists();
-      const allMovieLists = new Map();
-      const updatedMoviesInList = new Map();
+      const allMovieLists = new Map<number, ListInfo>();
+      const updatedMoviesInList = new Map<number, Set<number>>();
 
       for (const list of lists) {
         allMovieLists.set(list.id, {
@@ -101,7 +108,7 @@ export class MovieDataService {
         // Populate movies in lists
         const listDetails = await BackendApiService.getListDetails(list.id);
         if (listDetails && listDetails.listMovies) {
-          updatedMoviesInList.set(list.id, new Set(listDetails.listMovies.map(m => m.movieId)));
+          updatedMoviesInList.set(list.id, new Set(listDetails.listMovies.map((m: { movieId: number }) => m.movieId)));
         }
       }
 
@@ -115,7 +122,7 @@ export class MovieDataService {
   /**
    * Add movie to favorites
    */
-  async addToFavorites(movieId, title) {
+  async addToFavorites(movieId: number): Promise<boolean> {
     try {
       const result = await BackendApiService.addFavorite(movieId);
       if (result) {
@@ -132,7 +139,7 @@ export class MovieDataService {
   /**
    * Remove movie from favorites
    */
-  async removeFromFavorites(movieId, title) {
+  async removeFromFavorites(movieId: number): Promise<boolean> {
     try {
       await BackendApiService.removeFavorite(movieId);
       this.favorites.delete(movieId);
@@ -146,7 +153,7 @@ export class MovieDataService {
   /**
    * Add movie to watchlist
    */
-  async addToWatchlist(movieId, title) {
+  async addToWatchlist(movieId: number): Promise<boolean> {
     try {
       const result = await BackendApiService.addToWatchlist(movieId);
       if (result) {
@@ -163,7 +170,7 @@ export class MovieDataService {
   /**
    * Remove movie from watchlist
    */
-  async removeFromWatchlist(movieId, title) {
+  async removeFromWatchlist(movieId: number): Promise<boolean> {
     try {
       await BackendApiService.removeFromWatchlist(movieId);
       this.watchlist.delete(movieId);
@@ -177,7 +184,7 @@ export class MovieDataService {
   /**
    * Rate a movie
    */
-  async rateMovie(movieId, rating) {
+  async rateMovie(movieId: number, rating: number): Promise<boolean> {
     try {
       const result = await BackendApiService.addRating(movieId, rating);
       if (result) {
@@ -194,7 +201,7 @@ export class MovieDataService {
   /**
    * Delete movie rating
    */
-  async deleteRating(movieId) {
+  async deleteRating(movieId: number): Promise<boolean> {
     try {
       await BackendApiService.removeRating(movieId);
       this.ratings.delete(movieId);
@@ -208,7 +215,7 @@ export class MovieDataService {
   /**
    * Create a new custom list
    */
-  async createList(name) {
+  async createList(name: string): Promise<boolean> {
     try {
       const newList = await BackendApiService.createList(name);
       if (newList) {
@@ -229,7 +236,7 @@ export class MovieDataService {
   /**
    * Delete a custom list
    */
-  async deleteList(listId) {
+  async deleteList(listId: number): Promise<boolean> {
     try {
       await BackendApiService.deleteList(listId);
       this.lists.delete(listId);
@@ -244,7 +251,7 @@ export class MovieDataService {
   /**
    * Add movie to a custom list
    */
-  async addMovieToList(listId, movieId) {
+  async addMovieToList(listId: number, movieId: number): Promise<boolean> {
     try {
       const result = await BackendApiService.addMovieToList(listId, movieId);
       if (result) {
@@ -259,7 +266,7 @@ export class MovieDataService {
         if (!this.moviesInLists.has(listId)) {
           this.moviesInLists.set(listId, new Set());
         }
-        this.moviesInLists.get(listId).add(movieId);
+        this.moviesInLists.get(listId)!.add(movieId);
         return true;
       }
       return false;
@@ -272,7 +279,7 @@ export class MovieDataService {
   /**
    * Remove movie from a custom list
    */
-  async removeMovieFromList(listId, movieId) {
+  async removeMovieFromList(listId: number, movieId: number): Promise<boolean> {
     try {
       await BackendApiService.removeMovieFromList(listId, movieId);
       const existingList = this.lists.get(listId);
@@ -284,7 +291,7 @@ export class MovieDataService {
       }
 
       if (this.moviesInLists.has(listId)) {
-        this.moviesInLists.get(listId).delete(movieId);
+        this.moviesInLists.get(listId)!.delete(movieId);
       }
       return true;
     } catch (error) {
@@ -296,30 +303,14 @@ export class MovieDataService {
   /**
    * Get all movie data combined with user status
    */
-  getProcessedMovies(movies, fallbackPosterUrl) {
-    return movies.map((movie) => {
-      const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : fallbackPosterUrl;
-      const movieTitle = movie.title || "N/A";
-      const score = movie.vote_average || "N/A";
-      const originalLang = movie.original_language || "N/A";
-      const releaseDate = movie.release_date ? new Date(movie.release_date).getFullYear() : "N/A";
-
-      const isFavorite = this.favorites.has(movie.id);
-      const isWatchlist = this.watchlist.has(movie.id);
-      const rating = this.ratings.get(movie.id) || 0;
-
-      return {
-        id: movie.id,
-        posterUrl,
-        movieTitle,
-        score,
-        originalLang,
-        releaseDate,
-        isFavorite,
-        isWatchlist,
-        rating,
-      };
-    });
+  getProcessedMovies(movies: Partial<Movie>[], fallbackPosterUrl: string): ProcessedMovie[] {
+    return processMoviesWithUserStatus(
+      movies,
+      this.favorites,
+      this.watchlist,
+      this.ratings,
+      fallbackPosterUrl
+    );
   }
 
   getFavorites() { return this.favorites; }

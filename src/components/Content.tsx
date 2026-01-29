@@ -2,20 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import noPosterH from '../assets/No-Poster-h.png';
 import React from 'react';
-
-interface Genre {
-    id: number | string;
-    name: string;
-}
-
-interface TrendingMovie {
-    id: number;
-    title: string;
-    poster_path: string | null;
-    vote_average: number;
-    release_date: string;
-    count?: number;
-}
+import { Genre, TrendingMovie } from '../types';
 
 interface ContentProps {
     trendMovies: TrendingMovie[];

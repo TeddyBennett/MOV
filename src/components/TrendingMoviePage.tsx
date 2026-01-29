@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDataContext } from '../data/DataContext';
 import MovieGrid from './MovieGrid';
 import { useLocation } from 'react-router-dom';
 import { ApiService } from '../services/apiService';
 import { logError } from '../utils/errorHandler';
 
-function TrendingMoviePage({ time }) {
+interface TrendingMoviePageProps {
+  time: 'day' | 'week';
+}
+
+const TrendingMoviePage: React.FC<TrendingMoviePageProps> = ({ time }) => {
   const {
     setMovies,
     currentPage,
@@ -40,9 +44,9 @@ function TrendingMoviePage({ time }) {
     }
 
     fetchTrendingMovies();
-  }, [currentPage, location, time]);
+  }, [currentPage, location, time, setIsLoading, setMovies, setTotalPages]);
 
   return <MovieGrid />;
-}
+};
 
 export default TrendingMoviePage;

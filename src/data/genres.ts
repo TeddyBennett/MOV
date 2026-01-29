@@ -1,4 +1,6 @@
-const genres =[
+import { Genre } from '../types';
+
+const genres: Genre[] = [
     { "id": 28, "name": "Action" },
     { "id": 12, "name": "Adventure" },
     { "id": 16, "name": "Animation" },
@@ -20,9 +22,4 @@ const genres =[
     { "id": 37, "name": "Western" }
   ];
 
-  export default genres;
-
-
-
-  
-  
+export default genres;

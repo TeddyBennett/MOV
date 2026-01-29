@@ -1,24 +1,53 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ApiService } from '../services/apiService';
 import noPosterH from '../assets/No-Poster-h.png';
 import { BsStarFill, BsFillHeartFill, BsFillBookmarkPlusFill, BsChevronLeft, BsCalendar, BsClock, BsTag, BsBookmarkFill } from 'react-icons/bs';
 import { useDataContext } from '../data/DataContext';
 import { useCustomToast } from '../hooks/useCustomToast';
+import { Genre, Movie } from '../types';
 
-function MovieDetails() {
-  const { id } = useParams();
+interface CastMember {
+    id: number;
+    name: string;
+    character: string;
+    profile_path: string | null;
+}
+
+interface ProductionCompany {
+    id: number;
+    name: string;
+}
+
+interface MovieDetailsData extends Movie {
+    runtime: number;
+    tagline: string;
+    production_companies: ProductionCompany[];
+    budget: number;
+    revenue: number;
+    genres: Genre[];
+    credits?: {
+        cast: CastMember[];
+    };
+    recommendations?: {
+        results: Movie[];
+    };
+}
+
+const MovieDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const { movieDataOperations } = useDataContext();
   const { showCustomToast, showErrorToast } = useCustomToast();
   const navigate = useNavigate();
-  const [movie, setMovie] = useState(null);
-  const [cast, setCast] = useState([]);
-  const [recommended, setRecommended] = useState([]);
+  const [movie, setMovie] = useState<MovieDetailsData | null>(null);
+  const [cast, setCast] = useState<CastMember[]>([]);
+  const [recommended, setRecommended] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
+      if (!id) return;
       try {
         setIsLoading(true);
 
@@ -38,7 +67,7 @@ function MovieDetails() {
         if (movieData.recommendations?.results) {
           setRecommended(movieData.recommendations.results.slice(0, 6));
         }
-      } catch (err) {
+      } catch (err: any) {
         setError(err.message);
         showErrorToast("Failed to load movie details. Please try again.", "LOAD ERROR");
       } finally {
@@ -47,7 +76,7 @@ function MovieDetails() {
     };
 
     fetchMovieDetails();
-  }, [id]);
+  }, [id, showErrorToast]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -97,7 +126,7 @@ function MovieDetails() {
               onClick={handleGoBack}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center mx-auto"
             >
-              <BsChevronLeft className="mr-2" /> Back to Movies55555
+              <BsChevronLeft className="mr-2" /> Back to Movies
             </button>
           </div>
         </div>
@@ -134,8 +163,8 @@ function MovieDetails() {
     if (!movie) return;
     try {
       const success = isFavorite
-        ? await movieDataOperations.removeFromFavorites(movie.id, movie.title)
-        : await movieDataOperations.addToFavorites(movie.id, movie.title);
+        ? await movieDataOperations.removeFromFavorites(movie.id)
+        : await movieDataOperations.addToFavorites(movie.id);
 
       if (success) {
         const operation = isFavorite ? "removed from Favorite" : "added to Favorite";
@@ -157,8 +186,8 @@ function MovieDetails() {
     if (!movie) return;
     try {
       const success = isWatchlist
-        ? await movieDataOperations.removeFromWatchlist(movie.id, movie.title)
-        : await movieDataOperations.addToWatchlist(movie.id, movie.title);
+        ? await movieDataOperations.removeFromWatchlist(movie.id)
+        : await movieDataOperations.addToWatchlist(movie.id);
 
       if (success) {
         const operation = isWatchlist ? "removed from Watchlist" : "added to Watchlist";
@@ -192,7 +221,7 @@ function MovieDetails() {
                   alt={title}
                   className="w-48 h-72 object-cover rounded-lg shadow-2xl relative z-20"
                   onError={(e) => {
-                    e.target.src = noPosterH;
+                    (e.target as HTMLImageElement).src = noPosterH;
                   }}
                 />
               </div>
@@ -227,9 +256,9 @@ function MovieDetails() {
                   )}
                 </div>
 
-                {genres && genres.length > 0 && (
+                {genres && (genres as Genre[]).length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {genres.map((genre) => (
+                    {(genres as Genre[]).map((genre) => (
                       <span
                         key={genre.id}
                         className="px-3 py-1 bg-gray-800 bg-opacity-50 rounded-full text-sm"
@@ -290,7 +319,7 @@ function MovieDetails() {
                         alt={person.name}
                         className="w-24 h-24 object-cover rounded-full mx-auto mb-2 border-2 border-gray-700 group-hover:border-blue-500 transition-all duration-300"
                         onError={(e) => {
-                          e.target.src = noPosterH;
+                          (e.target as HTMLImageElement).src = noPosterH;
                         }}
                       />
 
@@ -366,7 +395,7 @@ function MovieDetails() {
                       alt={recMovie.title}
                       className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                       onError={(e) => {
-                        e.target.src = noPosterH;
+                        (e.target as HTMLImageElement).src = noPosterH;
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

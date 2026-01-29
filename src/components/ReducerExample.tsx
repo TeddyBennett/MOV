@@ -1,7 +1,19 @@
 import React, { useReducer } from 'react';
 
+interface WizardState {
+    currentStep: number;
+    name: string;
+    age: string;
+    email: string;
+}
+
+type WizardAction = 
+    | { type: 'NEXT' }
+    | { type: 'PREVIOUS' }
+    | { type: 'SET_FIELD'; field: keyof Omit<WizardState, 'currentStep'>; value: string };
+
 // Reducer to manage wizard state
-const wizardReducer = (state, action) => {
+const wizardReducer = (state: WizardState, action: WizardAction): WizardState => {
   switch (action.type) {
     case 'NEXT':
       return { ...state, currentStep: state.currentStep + 1 };
@@ -14,19 +26,19 @@ const wizardReducer = (state, action) => {
   }
 };
 
-const initialState = {
+const initialState: WizardState = {
   currentStep: 1,
   name: '',
   age: '',
   email: '',
 };
 
-const StepWizard = () => {
+const StepWizard: React.FC = () => {
   const [state, dispatch] = useReducer(wizardReducer, initialState);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    dispatch({ type: 'SET_FIELD', field: name, value });
+    dispatch({ type: 'SET_FIELD', field: name as keyof Omit<WizardState, 'currentStep'>, value });
   };
 
   const handleNext = () => {

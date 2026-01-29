@@ -1,18 +1,24 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/pagination.module.css';
 import { capTotalPages } from '../utils/paginationUtils';
 
-function Pagination({ totalPages, currentPage, handlePageChange }) {
-    const [pagesToShow, setPagesToShow] = useState([]);
+interface PaginationProps {
+    totalPages: number;
+    currentPage: number;
+    handlePageChange: (page: number) => void;
+}
 
-    totalPages = capTotalPages(totalPages);
+const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, handlePageChange }) => {
+    const [pagesToShow, setPagesToShow] = useState<(number | string)[]>([]);
+
+    const cappedTotalPages = capTotalPages(totalPages);
     
     useEffect(() => {
         const getPagesToShow = () => {
-            let pageNumbers = [];
+            const pageNumbers: (number | string)[] = [];
             const pageRange = 5; // Number of pages around the current page
             const start = Math.max(2, currentPage - Math.floor(pageRange / 2)); // Start from page 2
-            const end = Math.min(totalPages - 1, currentPage + Math.floor(pageRange / 2)); // Avoid last page
+            const end = Math.min(cappedTotalPages - 1, currentPage + Math.floor(pageRange / 2)); // Avoid last page
 
             // Always show the first page
             pageNumbers.push(1);
@@ -26,18 +32,18 @@ function Pagination({ totalPages, currentPage, handlePageChange }) {
             }
 
             // Add ellipsis before last page if needed
-            if (end < totalPages - 1) pageNumbers.push("...");
+            if (end < cappedTotalPages - 1) pageNumbers.push("...");
 
             // Always show the last page
-            if (totalPages > 1) {
-                pageNumbers.push(totalPages);
+            if (cappedTotalPages > 1) {
+                pageNumbers.push(cappedTotalPages);
             }
 
             setPagesToShow(pageNumbers);
         };
 
         getPagesToShow();
-    }, [currentPage, totalPages]);
+    }, [currentPage, cappedTotalPages]);
 
     return (
         <div className={styles["pagination"]}>
@@ -54,7 +60,7 @@ function Pagination({ totalPages, currentPage, handlePageChange }) {
                 <button
                     key={index}
                     onClick={() => {
-                        if (page !== "...") handlePageChange(page);
+                        if (typeof page === 'number') handlePageChange(page);
                     }}
                     disabled={page === "..."}
                     className={page === currentPage ? styles["active"] : ""}
@@ -66,13 +72,12 @@ function Pagination({ totalPages, currentPage, handlePageChange }) {
             {/* Next Button */}
             <button
                 onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage >= totalPages}
+                disabled={currentPage >= cappedTotalPages}
             >
                 &gt;
             </button>
         </div>
     );
-}
+};
 
 export default Pagination;
-
