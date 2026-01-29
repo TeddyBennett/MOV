@@ -11,7 +11,7 @@ import { Skeleton } from './ui/skeleton';
 import { Movie, List } from '../types';
 
 const ListSkeleton = () => (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-8 max-w-[1248px] mx-auto">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-8 w-full">
         {[...Array(12)].map((_, i) => (
             <div key={i} className="space-y-3">
                 <Skeleton className="h-[300px] w-full rounded-xl" />
@@ -93,28 +93,30 @@ const ListPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-transparent">
-            <header className="p-2 px-5 mx-auto max-w-[1248px]">
-                <div className="flex items-center gap-4 mb-2">
-                    <h1 className="text-2xl font-bold text-white">{listDetails.name || 'Loading List...'}</h1>
-                    {listDetails.id && (
-                        <button
-                            onClick={handleDeleteList}
-                            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all"
-                            title="Delete List"
-                        >
-                            <Trash2 size={24} />
-                        </button>
-                    )}
-                </div>
-                <p className="text-gray-400">{listDetails.description}</p>
-            </header>
+        <div className="max-w-[1248px] mx-auto px-4 mt-8">
+            <div className="bg-gray-900/30 backdrop-blur-sm border border-white/5 rounded-3xl shadow-2xl overflow-hidden pb-8">
+                <header className="p-8 flex flex-col items-center bg-gradient-to-b from-indigo-900/20 to-transparent">
+                    <div className="flex items-center gap-4 mb-2">
+                        <h1 className="text-4xl font-bold text-white">{listDetails.name || 'Loading List...'}</h1>
+                        {listDetails.id && (
+                            <button
+                                onClick={handleDeleteList}
+                                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all"
+                                title="Delete List"
+                            >
+                                <Trash2 size={24} />
+                            </button>
+                        )}
+                    </div>
+                    <p className="text-gray-400">{listDetails.description}</p>
+                </header>
 
-            {isLoading ? (
-                <ListSkeleton />
-            ) : (
-                <MovieGrid />
-            )}
+                {isLoading ? (
+                    <ListSkeleton />
+                ) : (
+                    <MovieGrid />
+                )}
+            </div>
         </div>
     );
 };

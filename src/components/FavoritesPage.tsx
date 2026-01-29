@@ -12,7 +12,7 @@ interface FavoritesSkeletonProps {
 }
 
 const FavoritesSkeleton: React.FC<FavoritesSkeletonProps> = ({ count }) => (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-8 max-w-[1248px] mx-auto">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-8 w-full">
         {Array.from({ length: count }).map((_, i) => (
             <div key={i} className="space-y-3">
                 <Skeleton className="h-[300px] w-full rounded-xl" />
@@ -58,17 +58,19 @@ const FavoritesPage: React.FC = () => {
     const skeletonCount = favoriteCount > 0 ? favoriteCount : 12; // Default to 12 if no favorites
 
     return (
-        <div className="min-h-screen bg-transparent">
-            <header className="p-2 px-5 mx-auto max-w-[1248px]">
-                <h1 className="text-2xl font-bold text-white mb-2">My Favorites</h1>
-                <span className="text-gray-400">Movies you've saved to your collection</span>
-            </header>
+        <div className="max-w-[1248px] mx-auto px-4 mt-8">
+            <div className="bg-gray-900/30 backdrop-blur-sm border border-white/5 rounded-3xl shadow-2xl overflow-hidden pb-8">
+                <header className="p-8 text-center bg-gradient-to-b from-indigo-900/20 to-transparent">
+                    <h1 className="text-4xl font-bold text-white mb-2">My Favorites</h1>
+                    <p className="text-gray-400">Movies you've saved to your collection</p>
+                </header>
 
-            {isLoading ? (
-                <FavoritesSkeleton count={skeletonCount} />
-            ) : (
-                <MovieGrid />
-            )}
+                {isLoading ? (
+                    <FavoritesSkeleton count={skeletonCount} />
+                ) : (
+                    <MovieGrid />
+                )}
+            </div>
         </div>
     );
 };

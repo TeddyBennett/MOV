@@ -38,8 +38,8 @@ const Content: React.FC<ContentProps> = ({
 
     return (
         <main className="relative w-full max-w-[1248px] mt-[10px] mx-auto px-4">
-            <div className="mb-8">
-                <header className="flex justify-between items-center mb-6">
+            <div className="mb-12 bg-gray-900/30 backdrop-blur-sm border border-white/5 rounded-3xl p-6 md:p-8 shadow-2xl">
+                <header className="flex justify-between items-center mb-8">
                     <h2 className="text-xl font-bold text-white tracking-tight">Top Trending Now</h2>
                     {location.pathname === "/" && (
                         <div className="relative" ref={dropdownRef}>
