@@ -13,7 +13,7 @@ interface RatedMoviesSkeletonProps {
 }
 
 const RatedMoviesSkeleton: React.FC<RatedMoviesSkeletonProps> = ({ count }) => (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-8 w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 p-3 sm:p-8 w-full">
         {Array.from({ length: count }).map((_, i) => (
             <div key={i} className="space-y-3">
                 <Skeleton className="h-[300px] w-full rounded-xl" />

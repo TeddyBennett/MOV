@@ -145,11 +145,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                         alt={movieTitle}
                     />
                 </div>
-                <div className="p-3 bg-gray-900/90 backdrop-blur-sm">
-                    <div className="text-sm font-bold text-white truncate mb-1 opacity-80 group-hover:opacity-100 transition-opacity" title={movieTitle}>
+                <div className="p-2 sm:p-3 bg-gray-900/90 backdrop-blur-sm">
+                    <div className="text-[11px] sm:text-sm font-bold text-white truncate mb-1 opacity-80 group-hover:opacity-100 transition-opacity" title={movieTitle}>
                         {movieTitle}
                     </div>
-                    <div className="flex items-center gap-1 text-[10px] text-gray-400 font-mono">
+                    <div className="flex items-center gap-1 text-[9px] sm:text-[10px] text-gray-400 font-mono">
                         <span className="inline-block mr-1"><BsStarFill size={12} className="text-yellow-400" /></span>
                         <strong className="text-white font-medium">{scoreFormat(score)}</strong>
                         <span className="text-gray-500">•</span>

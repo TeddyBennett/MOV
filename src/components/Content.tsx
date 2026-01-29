@@ -81,7 +81,7 @@ const Content: React.FC<ContentProps> = ({
                         <p className="text-gray-400 max-w-xs mx-auto">Check back later to see what's trending across the platform!</p>
                     </div>
                 ) : (
-                    <ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 list-none p-0 m-0">
+                    <ul className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3 sm:gap-4 list-none p-0 m-0">
                         {trendTopMovies.map((movie, index) => {
                             const imgUrl = movie.poster_path
                                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
