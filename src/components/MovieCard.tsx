@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { BsStarFill } from "react-icons/bs";
 import { useDataContext } from '../data/DataContext';
 import { ComboboxDropdownMenu } from './DropdownV2';
 import { scoreFormat } from '../utils/movieUtils';
 import { Link } from "react-router-dom";
 import { useCustomToast } from '../hooks/useCustomToast';
+import { useAuth } from '../data/AuthContext';
+import AuthModal from './AuthModal';
 
 interface MovieCardProps {
     movie: {
@@ -22,6 +24,8 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     const { movieDataOperations } = useDataContext();
+    const { isAuthenticated } = useAuth();
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const currentRating = useRef<number>(0);
     const selectedList = useRef<number | string>(0);
     const { showCustomToast } = useCustomToast();
@@ -38,7 +42,17 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         rating
     } = movie;
 
+    const checkAuth = () => {
+        if (!isAuthenticated) {
+            showCustomToast("Login Required", "Please sign in to perform this action.", "warning", "AUTHENTICATION");
+            setIsAuthModalOpen(true);
+            return false;
+        }
+        return true;
+    };
+
     const handleSaveFavorite = async () => {
+        if (!checkAuth()) return;
         try {
             const success = isFavorite
                 ? await movieDataOperations.removeFromFavorites(id)
@@ -56,6 +70,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     };
 
     const handleSaveWatchlist = async () => {
+        if (!checkAuth()) return;
         try {
             const success = isWatchlist
                 ? await movieDataOperations.removeFromWatchlist(id)
@@ -73,6 +88,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     };
 
     const handleSaveRating = async () => {
+        if (!checkAuth()) return;
         try {
             const ratingValue = currentRating.current;
             const success = await movieDataOperations.rateMovie(id, ratingValue);
@@ -87,6 +103,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     };
 
     const handleDelRating = async () => {
+        if (!checkAuth()) return;
         try {
             const success = await movieDataOperations.deleteRating(id);
 
@@ -100,6 +117,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     };
 
     const handleSaveMovieToList = async () => {
+        if (!checkAuth()) return;
         try {
             const listID = selectedList.current;
             const success = await movieDataOperations.addMovieToList(listID as number, id);
@@ -116,6 +134,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     };
 
     const handleRemoveMovieFromList = async () => {
+        if (!checkAuth()) return;
         try {
             const listID = selectedList.current;
             const success = await movieDataOperations.removeMovieFromList(listID as number, id);
@@ -175,6 +194,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                 handleSaveMovieToList={handleSaveMovieToList}
                 handleRemoveMovieFromList={handleRemoveMovieFromList}
                 moviesInList={movieDataOperations.getMoviesInLists()}
+            />
+
+            <AuthModal 
+                isOpen={isAuthModalOpen} 
+                onClose={() => setIsAuthModalOpen(false)} 
+                initialMode="signin"
             />
         </div >
     );

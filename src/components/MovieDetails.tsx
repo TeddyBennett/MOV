@@ -5,6 +5,8 @@ import noPosterH from '../assets/No-Poster-h.png';
 import { BsStarFill, BsFillHeartFill, BsFillBookmarkPlusFill, BsChevronLeft, BsCalendar, BsClock, BsTag, BsBookmarkFill } from 'react-icons/bs';
 import { useDataContext } from '../data/DataContext';
 import { useCustomToast } from '../hooks/useCustomToast';
+import { useAuth } from '../data/AuthContext';
+import AuthModal from './AuthModal';
 import { Genre, Movie } from '../types';
 
 interface CastMember {
@@ -87,6 +89,7 @@ const MovieDetailsSkeleton = () => (
 const MovieDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { movieDataOperations } = useDataContext();
+    const { isAuthenticated } = useAuth();
     const { showCustomToast, showErrorToast } = useCustomToast();
     const navigate = useNavigate();
     const [movie, setMovie] = useState<MovieDetailsData | null>(null);
@@ -94,6 +97,7 @@ const MovieDetails: React.FC = () => {
     const [recommended, setRecommended] = useState<Movie[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
     useEffect(() => {
         // When ID changes, reset the state to show loading skeleton immediately
@@ -203,8 +207,17 @@ const MovieDetails: React.FC = () => {
   const isFavorite = movieDataOperations.getFavorites().has(Number(id));
   const isWatchlist = movieDataOperations.getWatchlist().has(Number(id));
 
+  const checkAuth = () => {
+    if (!isAuthenticated) {
+      showCustomToast("Login Required", "Please sign in to perform this action.", "warning", "AUTHENTICATION");
+      setIsAuthModalOpen(true);
+      return false;
+    }
+    return true;
+  };
+
   async function handleFavoriteClick() {
-    if (!movie) return;
+    if (!movie || !checkAuth()) return;
     try {
       const success = isFavorite
         ? await movieDataOperations.removeFromFavorites(movie.id)
@@ -227,7 +240,7 @@ const MovieDetails: React.FC = () => {
   }
 
   async function handleWatchlistClick() {
-    if (!movie) return;
+    if (!movie || !checkAuth()) return;
     try {
       const success = isWatchlist
         ? await movieDataOperations.removeFromWatchlist(movie.id)
@@ -467,6 +480,12 @@ const MovieDetails: React.FC = () => {
           <BsChevronLeft className="mr-2" /> Back to Movies
         </button>
       </div>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        initialMode="signin"
+      />
     </div>
   );
 }

@@ -1,5 +1,8 @@
 import Rating from '@mui/material/Rating';
 import React, { useState } from 'react';
+import { useAuth } from '../data/AuthContext';
+import AuthModal from './AuthModal';
+import { useCustomToast } from '../hooks/useCustomToast';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -50,14 +53,26 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
 }) => {
     const [open, setOpen] = useState(false);
     const [showRating, setShowRating] = useState(false);
+    const { isAuthenticated } = useAuth();
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const { showCustomToast } = useCustomToast();
+
+    const checkAuth = () => {
+        if (!isAuthenticated) {
+            showCustomToast("Login Required", "Please sign in to perform this action.", "warning", "AUTHENTICATION");
+            setIsAuthModalOpen(true);
+            return false;
+        }
+        return true;
+    };
 
     return (
         <DropdownMenu open={open} onOpenChange={(isOpen) => {
             setOpen(isOpen);
         }}>
             <DropdownMenuTrigger asChild>
-                <button className="flex absolute top-4 right-4 items-center justify-center bg-white hover:bg-white/40  border border-white/10 rounded-full w-9 h-9 transition-all duration-300 group/trigger active:scale-90">
-                    <BsThreeDotsVertical className='text-black/70 group-hover/trigger:text-white transition-colors' size='20' />
+                <button className="flex absolute top-4 right-4 items-center justify-center bg-black/20 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-full w-9 h-9 transition-all duration-300 group/trigger active:scale-90">
+                    <BsThreeDotsVertical className='text-white/70 group-hover/trigger:text-white transition-colors' size='20' />
                 </button>
             </DropdownMenuTrigger>
 
@@ -93,6 +108,7 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
                                                     key={listID}
                                                     onSelect={(e) => {
                                                         e.preventDefault();
+                                                        if (!checkAuth()) return;
                                                         selectedList.current = listID;
                                                         if (isMovieInList) {
                                                             handleRemoveMovieFromList();
@@ -127,17 +143,17 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
                     <DropdownMenuSeparator className="bg-white/5 mx-1" />
                     
                     <DropdownMenuItem 
-                        onClick={handleSaveFavorite}
+                        onClick={() => checkAuth() && handleSaveFavorite()}
                         className="flex items-center gap-3 py-3 px-4 focus:bg-white/10 cursor-pointer transition-colors"
                     >
-                        <BsFillHeartFill className={isFavorite ? 'text-pink-500' : 'text-gray-400'} size={16} />
+                        <BsFillHeartFill title='Add To Favorite' className={isFavorite ? 'text-pink-500' : 'text-gray-400'} size={16} />
                         <span className="font-semibold text-gray-200 uppercase tracking-wider text-[11px]">Favorite</span>
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator className="bg-white/5 mx-1" />
                     
                     <DropdownMenuItem 
-                        onClick={handleSaveWatchlist}
+                        onClick={() => checkAuth() && handleSaveWatchlist()}
                         className="flex items-center gap-3 py-3 px-4 focus:bg-white/10 cursor-pointer transition-colors"
                     >
                         <BsBookmarkFill className={isWatchlist ? 'text-orange-500' : 'text-gray-400'} size={16} />
@@ -149,6 +165,7 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
                     <DropdownMenuItem
                         onSelect={(e) => {
                             e.preventDefault();
+                            if (!checkAuth()) return;
                             setShowRating(prev => !prev);
                         }}
                         className="flex items-center gap-3 py-3 px-4 focus:bg-white/10 cursor-pointer transition-colors"
@@ -164,6 +181,7 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
                                 <button 
                                     onClick={(e) => {
                                         e.stopPropagation();
+                                        if (!checkAuth()) return;
                                         handleDelRating();
                                     }}
                                     className="p-1.5 hover:bg-red-500/20 rounded-full transition-colors group/del"
@@ -179,6 +197,7 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
                                     precision={0.5}
                                     onChange={(_e, newValue) => {
                                         if (newValue !== null) {
+                                            if (!checkAuth()) return;
                                             const actualRating = newValue * 2;
                                             currentRating.current = actualRating;
                                             handleSaveRating();
@@ -195,6 +214,12 @@ export const ComboboxDropdownMenu: React.FC<ComboboxDropdownMenuProps> = ({
                     )}
                 </DropdownMenuGroup>
             </DropdownMenuContent>
+
+            <AuthModal 
+                isOpen={isAuthModalOpen} 
+                onClose={() => setIsAuthModalOpen(false)} 
+                initialMode="signin"
+            />
         </DropdownMenu >
     );
-};
+}
