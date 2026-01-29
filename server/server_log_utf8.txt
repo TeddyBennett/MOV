@@ -1,0 +1,541 @@
+﻿
+> server@1.0.0 dev
+> nodemon --exec ts-node server.ts
+
+[33m[nodemon] 3.1.11[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: ts,json[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+node.exe : C:\Users\TheRo\htdoc\repo\MovieApp\server\no
+de_modules\path-to-regexp\src\index.ts:225
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" 
+"C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\ 
+   TheRo\...rc\index.ts:225:String) [], RemoteExcepti  
+  on
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+      throw new PathError(`Missing parameter name at 
+index ${index}`, str);
+            ^
+PathError [TypeError]: Missing parameter name at index 
+11: /api/auth/*; visit 
+https://git.new/pathToRegexpError for info
+    at name (C:\Users\TheRo\htdoc\repo\MovieApp\server\
+node_modules\path-to-regexp\src\index.ts:225:13)
+    at parse (C:\Users\TheRo\htdoc\repo\MovieApp\server
+\node_modules\path-to-regexp\src\index.ts:242:62)
+    at pathToRegexp (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:480:54
+)
+    at Object.match (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:438:28
+)
+    at matcher (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\router\lib\layer.js:86:23)
+    at new Layer (C:\Users\TheRo\htdoc\repo\MovieApp\se
+rver\node_modules\router\lib\layer.js:93:62)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\router\index.js:428:17)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\express\lib\application.js:257:2
+2)
+    at Function.all (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\express\lib\application.js:495:20)
+    at Object.<anonymous> (C:\Users\TheRo\htdoc\repo\Mo
+vieApp\server\app.ts:25:5) {
+  originalPath: '/api/auth/*'
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ≡ƒùé∩╕Å backup and recover secrets: https://dotenvx.com/ops
+C:\Users\TheRo\htdoc\repo\MovieApp\server\node_modules\
+path-to-regexp\src\index.ts:225
+      throw new PathError(`Missing parameter name at 
+index ${index}`, str);
+            ^
+PathError [TypeError]: Missing parameter name at index 
+11: /api/auth/*; visit 
+https://git.new/pathToRegexpError for info
+    at name (C:\Users\TheRo\htdoc\repo\MovieApp\server\
+node_modules\path-to-regexp\src\index.ts:225:13)
+    at parse (C:\Users\TheRo\htdoc\repo\MovieApp\server
+\node_modules\path-to-regexp\src\index.ts:242:62)
+    at pathToRegexp (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:480:54
+)
+    at Object.match (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:438:28
+)
+    at matcher (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\router\lib\layer.js:86:23)
+    at new Layer (C:\Users\TheRo\htdoc\repo\MovieApp\se
+rver\node_modules\router\lib\layer.js:93:62)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\router\index.js:428:17)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\express\lib\application.js:257:2
+2)
+    at Function.all (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\express\lib\application.js:495:20)
+    at Object.<anonymous> (C:\Users\TheRo\htdoc\repo\Mo
+vieApp\server\app.ts:25:5) {
+  originalPath: '/api/auth/*'
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ΓÜÖ∩╕Å  enable debug logging with { debug: true }
+Auth Instance: true
+toNodeHandler: function
+C:\Users\TheRo\htdoc\repo\MovieApp\server\node_modules\
+path-to-regexp\src\index.ts:225
+      throw new PathError(`Missing parameter name at 
+index ${index}`, str);
+            ^
+PathError [TypeError]: Missing parameter name at index 
+11: /api/auth/*; visit 
+https://git.new/pathToRegexpError for info
+    at name (C:\Users\TheRo\htdoc\repo\MovieApp\server\
+node_modules\path-to-regexp\src\index.ts:225:13)
+    at parse (C:\Users\TheRo\htdoc\repo\MovieApp\server
+\node_modules\path-to-regexp\src\index.ts:242:62)
+    at pathToRegexp (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:480:54
+)
+    at Object.match (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:438:28
+)
+    at matcher (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\router\lib\layer.js:86:23)
+    at new Layer (C:\Users\TheRo\htdoc\repo\MovieApp\se
+rver\node_modules\router\lib\layer.js:93:62)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\router\index.js:428:17)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\express\lib\application.js:257:2
+2)
+    at Function.all (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\express\lib\application.js:495:20)
+    at Object.<anonymous> (C:\Users\TheRo\htdoc\repo\Mo
+vieApp\server\app.ts:27:5) {
+  originalPath: '/api/auth/*'
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ΓÜÖ∩╕Å  suppress all logs with { quiet: true }
+Server running on port 5000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ΓÜÖ∩╕Å  load multiple .env files with { path: ['.env.local', '.env'] }
+Server running on port 5000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ≡ƒôí add observability to secrets: https://dotenvx.com/ops
+Server running on port 5000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ΓÜÖ∩╕Å  write to custom object with { processEnv: myObject }
+C:\Users\TheRo\htdoc\repo\MovieApp\server\node_modules\
+path-to-regexp\src\index.ts:225
+      throw new PathError(`Missing parameter name at 
+index ${index}`, str);
+            ^
+PathError [TypeError]: Missing parameter name at index 
+11: /api/auth/*; visit 
+https://git.new/pathToRegexpError for info
+    at name (C:\Users\TheRo\htdoc\repo\MovieApp\server\
+node_modules\path-to-regexp\src\index.ts:225:13)
+    at parse (C:\Users\TheRo\htdoc\repo\MovieApp\server
+\node_modules\path-to-regexp\src\index.ts:242:62)
+    at pathToRegexp (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:480:54
+)
+    at Object.match (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\path-to-regexp\src\index.ts:438:28
+)
+    at matcher (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\router\lib\layer.js:86:23)
+    at new Layer (C:\Users\TheRo\htdoc\repo\MovieApp\se
+rver\node_modules\router\lib\layer.js:93:62)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\router\index.js:428:17)
+    at Function.route (C:\Users\TheRo\htdoc\repo\MovieA
+pp\server\node_modules\express\lib\application.js:257:2
+2)
+    at Function.all (C:\Users\TheRo\htdoc\repo\MovieApp
+\server\node_modules\express\lib\application.js:495:20)
+    at Object.<anonymous> (C:\Users\TheRo\htdoc\repo\Mo
+vieApp\server\app.ts:25:5) {
+  originalPath: '/api/auth/*'
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ≡ƒöÉ prevent committing .env to code: https://dotenvx.com/precommit
+Server running on port 5000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ≡ƒöä add secrets lifecycle management: https://dotenvx.com/ops
+Server running on port 5000
+[2m2026-01-22T13:47:39.561Z[0m [33mWARN[0m 
+[1m[Better Auth]:[0m [better-auth] Warning: your 
+BETTER_AUTH_SECRET should be at least 32 characters 
+long for adequate security. Generate one with `npx 
+@better-auth/cli secret` or `openssl rand -base64 32`.
+[2m2026-01-22T13:47:39.563Z[0m [33mWARN[0m 
+[1m[Better Auth]:[0m [better-auth] Warning: your 
+BETTER_AUTH_SECRET appears low-entropy. Use a randomly 
+generated secret for production.
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: Γ£à audit secrets and track compliance: https://dotenvx.com/ops
+Server running on port 5000
+[2m2026-01-22T13:49:37.927Z[0m [33mWARN[0m 
+[1m[Better Auth]:[0m [better-auth] Warning: your 
+BETTER_AUTH_SECRET should be at least 32 characters 
+long for adequate security. Generate one with `npx 
+@better-auth/cli secret` or `openssl rand -base64 32`.
+[2m2026-01-22T13:49:37.928Z[0m [33mWARN[0m 
+[1m[Better Auth]:[0m [better-auth] Warning: your 
+BETTER_AUTH_SECRET appears low-entropy. Use a randomly 
+generated secret for production.
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ≡ƒöä add secrets lifecycle management: https://dotenvx.com/ops
+Environment variables loaded
+Server running on port 5000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ≡ƒùé∩╕Å backup and recover secrets: https://dotenvx.com/ops
+Environment variables loaded
+Server running on port 5000
+[2m2026-01-22T13:51:17.488Z[0m [31mERROR[0m 
+[1m[Better Auth]:[0m Failed to create user 
+PrismaClientValidationError: 
+Invalid `prisma.user.create()` invocation:
+
+{
+  data: {
+    name: "jonh",
+    email: "x@x.com",
+    emailVerified: false,
+    createdAt: new Date("2026-01-22T13:51:17.410Z"),
+    updatedAt: new Date("2026-01-22T13:51:17.410Z"),
+    id: "G2Oj8cXYg1hfJajbJmg5OrrnuS9IY7XV",
++   username: String
+  },
+  select: undefined
+}
+
+Argument `username` is missing.
+    at throwValidationException (C:\Users\TheRo\htdoc\r
+epo\MovieApp\server\node_modules\@prisma\client\src\run
+time\core\errorRendering\throwValidationException.ts:46
+:9)
+    at Vr.handleRequestError (C:\Users\TheRo\htdoc\repo
+\MovieApp\server\node_modules\@prisma\client\src\runtim
+e\RequestHandler.ts:202:7)
+    at Vr.handleAndLogRequestError (C:\Users\TheRo\htdo
+c\repo\MovieApp\server\node_modules\@prisma\client\src\
+runtime\RequestHandler.ts:174:12)
+    at Vr.request (C:\Users\TheRo\htdoc\repo\MovieApp\s
+erver\node_modules\@prisma\client\src\runtime\RequestHa
+ndler.ts:143:12)
+    at processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async a (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\@prisma\client\src\runtime\getPrismaCli
+ent.ts:805:24)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/better-auth/src/ada
+pters/prisma-adapter/prisma-adapter.ts:342:21)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/@better-auth/core/d
+ist/db/adapter/factory.mjs:414:16)
+    at async createWithHooks (file:///C:/Users/TheRo/ht
+doc/repo/MovieApp/server/node_modules/better-auth/src/d
+b/with-hooks.ts:52:7)
+    at async Object.createUser (file:///C:/Users/TheRo/
+htdoc/repo/MovieApp/server/node_modules/better-auth/src
+/db/internal-adapter.ts:119:24) {
+  clientVersion: '7.3.0'
+}
+[2m2026-01-22T13:52:38.073Z[0m [31mERROR[0m 
+[1m[Better Auth]:[0m Failed to create user 
+PrismaClientValidationError: 
+Invalid `prisma.user.create()` invocation:
+
+{
+  data: {
+    name: "jonh",
+    email: "x@x.com",
+    emailVerified: false,
+    createdAt: new Date("2026-01-22T13:52:38.067Z"),
+    updatedAt: new Date("2026-01-22T13:52:38.067Z"),
+    id: "ceXLQVDXv3P1I3eHyWQxbV57rxRn0Qrw",
++   username: String
+  },
+  select: undefined
+}
+
+Argument `username` is missing.
+    at throwValidationException (C:\Users\TheRo\htdoc\r
+epo\MovieApp\server\node_modules\@prisma\client\src\run
+time\core\errorRendering\throwValidationException.ts:46
+:9)
+    at Vr.handleRequestError (C:\Users\TheRo\htdoc\repo
+\MovieApp\server\node_modules\@prisma\client\src\runtim
+e\RequestHandler.ts:202:7)
+    at Vr.handleAndLogRequestError (C:\Users\TheRo\htdo
+c\repo\MovieApp\server\node_modules\@prisma\client\src\
+runtime\RequestHandler.ts:174:12)
+    at Vr.request (C:\Users\TheRo\htdoc\repo\MovieApp\s
+erver\node_modules\@prisma\client\src\runtime\RequestHa
+ndler.ts:143:12)
+    at processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async a (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\@prisma\client\src\runtime\getPrismaCli
+ent.ts:805:24)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/better-auth/src/ada
+pters/prisma-adapter/prisma-adapter.ts:342:21)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/@better-auth/core/d
+ist/db/adapter/factory.mjs:414:16)
+    at async createWithHooks (file:///C:/Users/TheRo/ht
+doc/repo/MovieApp/server/node_modules/better-auth/src/d
+b/with-hooks.ts:52:7)
+    at async Object.createUser (file:///C:/Users/TheRo/
+htdoc/repo/MovieApp/server/node_modules/better-auth/src
+/db/internal-adapter.ts:119:24) {
+  clientVersion: '7.3.0'
+}
+[2m2026-01-22T13:55:10.812Z[0m [31mERROR[0m 
+[1m[Better Auth]:[0m Failed to create user 
+PrismaClientValidationError: 
+Invalid `prisma.user.create()` invocation:
+
+{
+  data: {
+    name: "jonh",
+    email: "x@x.com",
+    emailVerified: false,
+    createdAt: new Date("2026-01-22T13:55:10.808Z"),
+    updatedAt: new Date("2026-01-22T13:55:10.808Z"),
+    id: "lq7h3ad0HETZagBWcHbmpXskJVHcRBwq",
++   username: String
+  },
+  select: undefined
+}
+
+Argument `username` is missing.
+    at throwValidationException (C:\Users\TheRo\htdoc\r
+epo\MovieApp\server\node_modules\@prisma\client\src\run
+time\core\errorRendering\throwValidationException.ts:46
+:9)
+    at Vr.handleRequestError (C:\Users\TheRo\htdoc\repo
+\MovieApp\server\node_modules\@prisma\client\src\runtim
+e\RequestHandler.ts:202:7)
+    at Vr.handleAndLogRequestError (C:\Users\TheRo\htdo
+c\repo\MovieApp\server\node_modules\@prisma\client\src\
+runtime\RequestHandler.ts:174:12)
+    at Vr.request (C:\Users\TheRo\htdoc\repo\MovieApp\s
+erver\node_modules\@prisma\client\src\runtime\RequestHa
+ndler.ts:143:12)
+    at processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async a (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\@prisma\client\src\runtime\getPrismaCli
+ent.ts:805:24)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/better-auth/src/ada
+pters/prisma-adapter/prisma-adapter.ts:342:21)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/@better-auth/core/d
+ist/db/adapter/factory.mjs:414:16)
+    at async createWithHooks (file:///C:/Users/TheRo/ht
+doc/repo/MovieApp/server/node_modules/better-auth/src/d
+b/with-hooks.ts:52:7)
+    at async Object.createUser (file:///C:/Users/TheRo/
+htdoc/repo/MovieApp/server/node_modules/better-auth/src
+/db/internal-adapter.ts:119:24) {
+  clientVersion: '7.3.0'
+}
+[2m2026-01-22T13:57:58.205Z[0m [31mERROR[0m 
+[1m[Better Auth]:[0m Failed to create user 
+PrismaClientValidationError: 
+Invalid `prisma.user.create()` invocation:
+
+{
+  data: {
+    name: "jonh",
+    email: "x@x.com",
+    emailVerified: false,
+    createdAt: new Date("2026-01-22T13:57:58.201Z"),
+    updatedAt: new Date("2026-01-22T13:57:58.201Z"),
+    id: "eN0Sa0mxDeUXGyLrSF4oI95lWSE90d9Y",
++   username: String
+  },
+  select: undefined
+}
+
+Argument `username` is missing.
+    at throwValidationException (C:\Users\TheRo\htdoc\r
+epo\MovieApp\server\node_modules\@prisma\client\src\run
+time\core\errorRendering\throwValidationException.ts:46
+:9)
+    at Vr.handleRequestError (C:\Users\TheRo\htdoc\repo
+\MovieApp\server\node_modules\@prisma\client\src\runtim
+e\RequestHandler.ts:202:7)
+    at Vr.handleAndLogRequestError (C:\Users\TheRo\htdo
+c\repo\MovieApp\server\node_modules\@prisma\client\src\
+runtime\RequestHandler.ts:174:12)
+    at Vr.request (C:\Users\TheRo\htdoc\repo\MovieApp\s
+erver\node_modules\@prisma\client\src\runtime\RequestHa
+ndler.ts:143:12)
+    at processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async a (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\@prisma\client\src\runtime\getPrismaCli
+ent.ts:805:24)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/better-auth/src/ada
+pters/prisma-adapter/prisma-adapter.ts:342:21)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/@better-auth/core/d
+ist/db/adapter/factory.mjs:414:16)
+    at async createWithHooks (file:///C:/Users/TheRo/ht
+doc/repo/MovieApp/server/node_modules/better-auth/src/d
+b/with-hooks.ts:52:7)
+    at async Object.createUser (file:///C:/Users/TheRo/
+htdoc/repo/MovieApp/server/node_modules/better-auth/src
+/db/internal-adapter.ts:119:24) {
+  clientVersion: '7.3.0'
+}
+[2m2026-01-22T14:01:10.584Z[0m [31mERROR[0m 
+[1m[Better Auth]:[0m Failed to create user 
+PrismaClientValidationError: 
+Invalid `prisma.user.create()` invocation:
+
+{
+  data: {
+    name: "a",
+    email: "x@x.com",
+    emailVerified: false,
+    createdAt: new Date("2026-01-22T14:01:10.580Z"),
+    updatedAt: new Date("2026-01-22T14:01:10.580Z"),
+    id: "teur6vfcZUhGRkEtm50sP9zIp0DFj4IC",
++   username: String
+  },
+  select: undefined
+}
+
+Argument `username` is missing.
+    at throwValidationException (C:\Users\TheRo\htdoc\r
+epo\MovieApp\server\node_modules\@prisma\client\src\run
+time\core\errorRendering\throwValidationException.ts:46
+:9)
+    at Vr.handleRequestError (C:\Users\TheRo\htdoc\repo
+\MovieApp\server\node_modules\@prisma\client\src\runtim
+e\RequestHandler.ts:202:7)
+    at Vr.handleAndLogRequestError (C:\Users\TheRo\htdo
+c\repo\MovieApp\server\node_modules\@prisma\client\src\
+runtime\RequestHandler.ts:174:12)
+    at Vr.request (C:\Users\TheRo\htdoc\repo\MovieApp\s
+erver\node_modules\@prisma\client\src\runtime\RequestHa
+ndler.ts:143:12)
+    at processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async a (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\@prisma\client\src\runtime\getPrismaCli
+ent.ts:805:24)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/better-auth/src/ada
+pters/prisma-adapter/prisma-adapter.ts:342:21)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/@better-auth/core/d
+ist/db/adapter/factory.mjs:414:16)
+    at async createWithHooks (file:///C:/Users/TheRo/ht
+doc/repo/MovieApp/server/node_modules/better-auth/src/d
+b/with-hooks.ts:52:7)
+    at async Object.createUser (file:///C:/Users/TheRo/
+htdoc/repo/MovieApp/server/node_modules/better-auth/src
+/db/internal-adapter.ts:119:24) {
+  clientVersion: '7.3.0'
+}
+[2m2026-01-22T14:04:32.549Z[0m [31mERROR[0m 
+[1m[Better Auth]:[0m Failed to create user 
+PrismaClientValidationError: 
+Invalid `prisma.user.create()` invocation:
+
+{
+  data: {
+    name: "a",
+    email: "x@x.com",
+    emailVerified: false,
+    createdAt: new Date("2026-01-22T14:04:32.545Z"),
+    updatedAt: new Date("2026-01-22T14:04:32.545Z"),
+    id: "d5vOrffzh05aGDuLN1y0Exldnk03Xss1",
++   username: String
+  },
+  select: undefined
+}
+
+Argument `username` is missing.
+    at throwValidationException (C:\Users\TheRo\htdoc\r
+epo\MovieApp\server\node_modules\@prisma\client\src\run
+time\core\errorRendering\throwValidationException.ts:46
+:9)
+    at Vr.handleRequestError (C:\Users\TheRo\htdoc\repo
+\MovieApp\server\node_modules\@prisma\client\src\runtim
+e\RequestHandler.ts:202:7)
+    at Vr.handleAndLogRequestError (C:\Users\TheRo\htdo
+c\repo\MovieApp\server\node_modules\@prisma\client\src\
+runtime\RequestHandler.ts:174:12)
+    at Vr.request (C:\Users\TheRo\htdoc\repo\MovieApp\s
+erver\node_modules\@prisma\client\src\runtime\RequestHa
+ndler.ts:143:12)
+    at processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async a (C:\Users\TheRo\htdoc\repo\MovieApp\serv
+er\node_modules\@prisma\client\src\runtime\getPrismaCli
+ent.ts:805:24)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/better-auth/src/ada
+pters/prisma-adapter/prisma-adapter.ts:342:21)
+    at async Object.create (file:///C:/Users/TheRo/htdo
+c/repo/MovieApp/server/node_modules/@better-auth/core/d
+ist/db/adapter/factory.mjs:414:16)
+    at async createWithHooks (file:///C:/Users/TheRo/ht
+doc/repo/MovieApp/server/node_modules/better-auth/src/d
+b/with-hooks.ts:52:7)
+    at async Object.createUser (file:///C:/Users/TheRo/
+htdoc/repo/MovieApp/server/node_modules/better-auth/src
+/db/internal-adapter.ts:119:24) {
+  clientVersion: '7.3.0'
+}
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node server.ts`[39m
+[dotenv@17.2.3] injecting env (3) from .env -- tip: ΓÜÖ∩╕Å  load multiple .env files with { path: ['.env.local', '.env'] }
+Environment variables loaded
+Server running on port 5000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting child process[39m
+[32m[nodemon] starting `ts-node server.ts`[39m

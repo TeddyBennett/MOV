@@ -1,0 +1,43 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "dotenv -e .env -- nodemon --exec tsx server.ts",
+    "dev:dev": "dotenv -e .env.dev -- nodemon --exec tsx server.ts",
+    "dev:prod": "dotenv -e .env.prod -- nodemon --exec tsx server.ts",
+    "prisma:studio": "dotenv -e .env.prod -- prisma studio",
+    "build": "node build.cjs && npx prisma generate && npx prisma migrate deploy",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:migrate": "dotenv -e .env.prod -- prisma migrate dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.10",
+    "@types/pg": "^8.16.0",
+    "better-auth": "^1.4.17",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "dotenv-cli": "^11.0.0",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11",
+    "pg": "^8.17.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2",
+    "prisma": "^7.3.0",
+    "tsx": "^4.21.0"
+  }
+}
