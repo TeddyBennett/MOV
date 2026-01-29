@@ -72,12 +72,14 @@ const ListPage: React.FC = () => {
     }, [id, setIsLoading, setMovies, setTotalPages]);
 
     const handleDeleteList = async () => {
-        if (!id || !listDetails.id) return;
+        if (!id) return;
         if (!window.confirm(`Are you sure you want to delete the list "${listDetails.name}"?`)) return;
 
         try {
             setIsLoading(true);
-            const success = await movieDataOperations.deleteList(listDetails.id);
+            // Convert the URL param id to number for the API call
+            const listId = parseInt(id);
+            const success = await movieDataOperations.deleteList(listId);
             if (success) {
                 showCustomToast("List Deleted", `"${listDetails.name}" has been removed.`, "destructive", "CUSTOM LISTS");
                 navigate('/');
