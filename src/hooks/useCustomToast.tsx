@@ -29,31 +29,30 @@ export const useCustomToast = () => {
         const SelectedIcon = Icons[variantMode];
 
         toast({
-            title: (
-                <div className="flex items-center justify-center gap-2">
-                    <SelectedIcon className="w-5 h-5 text-white" />
-                    <span>{toastTitle}</span>
-                </div>
-            ) as ReactNode,
+            title: toastTitle,
             description: (
-                <span>
-                    <span className="font-bold italic">{title}</span> has been{" "}
-                    <span className="">{operation}</span>.
-                </span>
+                <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                        <SelectedIcon className="w-4 h-4" />
+                        <span>
+                            <span className="font-bold italic">{title}</span> has been {operation}.
+                        </span>
+                    </div>
+                </div>
             ),
-            variant: variantMode as any, // Cast to any because the shadcn toast variant might have different literal types
+            variant: variantMode as any,
         });
     };
 
     const showErrorToast = (message: string, toastTitle: string = 'ERROR') => {
         toast({
-            title: (
-                <div className="flex items-center justify-center gap-2">
-                    <BsDashCircleFill className="w-5 h-5 text-white" />
-                    <span>{toastTitle}</span>
+            title: toastTitle,
+            description: (
+                <div className="flex items-center gap-2">
+                    <BsDashCircleFill className="w-4 h-4" />
+                    <span>{message}</span>
                 </div>
-            ) as ReactNode,
-            description: <span>{message}</span>,
+            ),
             variant: "destructive",
         });
     };

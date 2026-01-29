@@ -9,6 +9,7 @@ import ratingRouter from './routes/ratings.js';
 import authRouter from './routes/auth.js';
 import tmdbRouter from './routes/tmdb.js';
 import trendingRouter from './routes/trending.js';
+import { errorMiddleware } from './middleware/errorMiddleware.js';
 
 const app: Application = express();
 
@@ -36,6 +37,9 @@ app.use('/api/lists', listRouter);
 app.use('/api/ratings', ratingRouter);
 app.use('/api/tmdb', tmdbRouter);
 app.use('/api/trending', trendingRouter);
+
+// Global Error Handler (must be after all routes)
+app.use(errorMiddleware);
 
 // Fallback for unmatched routes
 app.use((req: Request, res: Response) => {

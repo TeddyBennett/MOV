@@ -45,7 +45,7 @@ const WatchlistPage: React.FC = () => {
                 setMovies(validMovies);
                 setTotalPages(1); // Backend watchlist currently not paginated
             } catch (error) {
-                logError('fetchWatchlistFromBackend', error);
+                logError(error, 'fetchWatchlistFromBackend');
             } finally {
                 setIsLoading(false);
             }

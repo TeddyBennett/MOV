@@ -1,5 +1,5 @@
 import Rating from '@mui/material/Rating';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Command,
     CommandEmpty,

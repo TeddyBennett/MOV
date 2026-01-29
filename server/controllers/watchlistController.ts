@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { watchlistService } from '../services/watchlistService.js';
 import { z } from 'zod';
+import { ApiError } from '../utils/errors.js';
 
 // Architect's Note: Reusing the same validation logic for consistency
 const MovieIdSchema = z.object({
@@ -12,73 +13,44 @@ const MovieIdSchema = z.object({
 
 export const watchlistController = {
     getWatchlist: async (req: Request, res: Response) => {
-        try {
-            const userId = (req as any).session.user.id;
-            const items = await watchlistService.getWatchlist(userId);
-            res.json(items);
-        } catch (error) {
-            console.error('Get Watchlist Error:', error);
-            res.status(500).json({ message: 'Error retrieving watchlist' });
-        }
+        const userId = (req as any).session.user.id;
+        const items = await watchlistService.getWatchlist(userId);
+        res.json(items);
     },
 
     addToWatchlist: async (req: Request, res: Response) => {
-        try {
-            const userId = (req as any).session.user.id;
-            const validation = MovieIdSchema.safeParse(req.body);
+        const userId = (req as any).session.user.id;
+        const validation = MovieIdSchema.safeParse(req.body);
 
-            if (!validation.success) {
-                return res.status(400).json({
-                    message: 'Invalid Movie ID',
-                    errors: validation.error.issues
-                });
-            }
-
-            const item = await watchlistService.addWatchlist(userId, validation.data.movieId);
-            res.status(201).json(item);
-        } catch (error) {
-            console.error('Add Watchlist Error:', error);
-            res.status(500).json({ message: 'Error adding to watchlist' });
+        if (!validation.success) {
+            throw ApiError.badRequest('Invalid Movie ID', validation.error.issues);
         }
+
+        const item = await watchlistService.addWatchlist(userId, validation.data.movieId);
+        res.status(201).json(item);
     },
 
     removeFromWatchlist: async (req: Request, res: Response) => {
-        try {
-            const userId = (req as any).session.user.id;
-            const validation = MovieIdSchema.safeParse(req.params);
+        const userId = (req as any).session.user.id;
+        const validation = MovieIdSchema.safeParse(req.params);
 
-            if (!validation.success) {
-                return res.status(400).json({
-                    message: 'Invalid Movie ID',
-                    errors: validation.error.issues
-                });
-            }
-
-            await watchlistService.removeWatchlist(userId, validation.data.movieId);
-            res.status(204).send();
-        } catch (error) {
-            console.error('Remove Watchlist Error:', error);
-            res.status(500).json({ message: 'Error removing from watchlist' });
+        if (!validation.success) {
+            throw ApiError.badRequest('Invalid Movie ID', validation.error.issues);
         }
+
+        await watchlistService.removeWatchlist(userId, validation.data.movieId);
+        res.status(204).send();
     },
 
     checkWatchlist: async (req: Request, res: Response) => {
-        try {
-            const userId = (req as any).session.user.id;
-            const validation = MovieIdSchema.safeParse(req.params);
+        const userId = (req as any).session.user.id;
+        const validation = MovieIdSchema.safeParse(req.params);
 
-            if (!validation.success) {
-                return res.status(400).json({
-                    message: 'Invalid Movie ID',
-                    errors: validation.error.issues
-                });
-            }
-
-            const inWatchlist = await watchlistService.isInWatchlist(userId, validation.data.movieId);
-            res.json({ inWatchlist });
-        } catch (error) {
-            console.error('Check Watchlist Error:', error);
-            res.status(500).json({ message: 'Error checking watchlist status' });
+        if (!validation.success) {
+            throw ApiError.badRequest('Invalid Movie ID', validation.error.issues);
         }
+
+        const inWatchlist = await watchlistService.isInWatchlist(userId, validation.data.movieId);
+        res.json({ inWatchlist });
     },
 };

@@ -45,7 +45,7 @@ const FavoritesPage: React.FC = () => {
                 setMovies(validMovies);
                 setTotalPages(1); // Backend favorites currently not paginated
             } catch (error) {
-                logError('fetchFavoritesFromBackend', error);
+                logError(error, 'fetchFavoritesFromBackend');
             } finally {
                 setIsLoading(false);
             }

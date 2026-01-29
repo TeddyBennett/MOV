@@ -44,155 +44,95 @@ const RatingBodySchema = z.object({
 
 export class TmdbController {
     static async getPopularMovies(req: Request, res: Response) {
-        try {
-            const { page } = PageQuerySchema.parse(req.query);
-            const data = await TmdbService.getPopularMovies(page);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { page } = PageQuerySchema.parse(req.query);
+        const data = await TmdbService.getPopularMovies(page);
+        res.json(data);
     }
 
     static async searchMovies(req: Request, res: Response) {
-        try {
-            const { query, page } = SearchQuerySchema.parse(req.query);
-            const data = await TmdbService.searchMovies(query, page);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { query, page } = SearchQuerySchema.parse(req.query);
+        const data = await TmdbService.searchMovies(query, page);
+        res.json(data);
     }
 
     static async getMoviesByGenre(req: Request, res: Response) {
-        try {
-            const { genreId } = GenreParamsSchema.parse(req.params);
-            const { page } = PageQuerySchema.parse(req.query);
-            const data = await TmdbService.getMoviesByGenre(genreId, page);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { genreId } = GenreParamsSchema.parse(req.params);
+        const { page } = PageQuerySchema.parse(req.query);
+        const data = await TmdbService.getMoviesByGenre(genreId, page);
+        res.json(data);
     }
 
     static async getMovieDetails(req: Request, res: Response) {
-        try {
-            const { movieId } = MovieParamsSchema.parse(req.params);
-            const data = await TmdbService.getMovieDetails(movieId, req.query);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { movieId } = MovieParamsSchema.parse(req.params);
+        const data = await TmdbService.getMovieDetails(movieId, req.query);
+        res.json(data);
     }
 
     static async updateFavorite(req: Request, res: Response) {
-        try {
-            const { movieId, favorite } = FavoriteBodySchema.parse(req.body);
-            const data = await TmdbService.updateFavorite(movieId, favorite);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { movieId, favorite } = FavoriteBodySchema.parse(req.body);
+        const data = await TmdbService.updateFavorite(movieId, favorite);
+        res.json(data);
     }
 
     static async updateWatchlist(req: Request, res: Response) {
-        try {
-            const { movieId, watchlist } = WatchlistBodySchema.parse(req.body);
-            const data = await TmdbService.updateWatchlist(movieId, watchlist);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { movieId, watchlist } = WatchlistBodySchema.parse(req.body);
+        const data = await TmdbService.updateWatchlist(movieId, watchlist);
+        res.json(data);
     }
 
     static async rateMovie(req: Request, res: Response) {
-        try {
-            const { movieId, rating } = RatingBodySchema.parse(req.body);
-            const data = await TmdbService.rateMovie(movieId, rating);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { movieId, rating } = RatingBodySchema.parse(req.body);
+        const data = await TmdbService.rateMovie(movieId, rating);
+        res.json(data);
     }
 
     static async deleteRating(req: Request, res: Response) {
-        try {
-            const { movieId } = MovieParamsSchema.parse(req.params);
-            const data = await TmdbService.deleteRating(movieId);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { movieId } = MovieParamsSchema.parse(req.params);
+        const data = await TmdbService.deleteRating(movieId);
+        res.json(data);
     }
 
     static async addMovieToList(req: Request, res: Response) {
-        try {
-            const { listId } = ListParamsSchema.parse(req.params);
-            const { movieId } = z.object({ movieId: z.number() }).parse(req.body);
-            const data = await TmdbService.addMovieToList(listId, movieId);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { listId } = ListParamsSchema.parse(req.params);
+        const { movieId } = z.object({ movieId: z.number() }).parse(req.body);
+        const data = await TmdbService.addMovieToList(listId, movieId);
+        res.json(data);
     }
 
     static async removeMovieFromList(req: Request, res: Response) {
-        try {
-            const { listId } = ListParamsSchema.parse(req.params);
-            const { movieId } = z.object({ movieId: z.number() }).parse(req.body);
-            const data = await TmdbService.removeMovieFromList(listId, movieId);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { listId } = ListParamsSchema.parse(req.params);
+        const { movieId } = z.object({ movieId: z.number() }).parse(req.body);
+        const data = await TmdbService.removeMovieFromList(listId, movieId);
+        res.json(data);
     }
 
     static async getFavoriteMovies(req: Request, res: Response) {
-        try {
-            const { page } = PageQuerySchema.parse(req.query);
-            const data = await TmdbService.getFavoriteMovies(page);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { page } = PageQuerySchema.parse(req.query);
+        const data = await TmdbService.getFavoriteMovies(page);
+        res.json(data);
     }
 
     static async getWatchlistMovies(req: Request, res: Response) {
-        try {
-            const { page } = PageQuerySchema.parse(req.query);
-            const data = await TmdbService.getWatchlistMovies(page);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { page } = PageQuerySchema.parse(req.query);
+        const data = await TmdbService.getWatchlistMovies(page);
+        res.json(data);
     }
 
     static async getRatedMovies(req: Request, res: Response) {
-        try {
-            const { page } = PageQuerySchema.parse(req.query);
-            const data = await TmdbService.getRatedMovies(page);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { page } = PageQuerySchema.parse(req.query);
+        const data = await TmdbService.getRatedMovies(page);
+        res.json(data);
     }
 
     static async getLists(req: Request, res: Response) {
-        try {
-            const { page } = PageQuerySchema.parse(req.query);
-            const data = await TmdbService.getLists(page);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { page } = PageQuerySchema.parse(req.query);
+        const data = await TmdbService.getLists(page);
+        res.json(data);
     }
 
     static async getListDetails(req: Request, res: Response) {
-        try {
-            const { listId } = ListParamsSchema.parse(req.params);
-            const data = await TmdbService.getListDetails(listId);
-            res.json(data);
-        } catch (error: any) {
-            res.status(400).json({ error: error.message });
-        }
+        const { listId } = ListParamsSchema.parse(req.params);
+        const data = await TmdbService.getListDetails(listId);
+        res.json(data);
     }
 }

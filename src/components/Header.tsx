@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import heroImg from '../assets/hero-img.png';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../data/AuthContext';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import AuthModal from './AuthModal';
 
 import { LogOut } from 'lucide-react';

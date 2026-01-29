@@ -36,7 +36,7 @@ const TrendingMoviePage: React.FC<TrendingMoviePageProps> = ({ time }) => {
         setMovies(data.results || []);
         setTotalPages(data.total_pages);
       } catch (error) {
-        logError('fetchTrendingMovies', error);
+        logError(error, 'fetchTrendingMovies');
         console.error('Error fetching trending movies: ', error);
       } finally {
         setIsLoading(false);

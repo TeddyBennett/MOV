@@ -68,7 +68,7 @@ const App: React.FC = () => {
                  setMovies([]);
             }
         } catch (error) {
-            logError('fetchMovie', error);
+            logError(error, 'fetchMovie');
             console.error("Error fetching movie data: ", error);
         } finally {
             setIsLoading(false);
@@ -116,7 +116,7 @@ const App: React.FC = () => {
             updateDisplayedMoviesForGenreSearchTerm(filteredMovieRef.current);
             loadedPages.current += count;
         } catch (error) {
-            logError('fetchMoviesByGenre', error);
+            logError(error, 'fetchMoviesByGenre');
             console.error("Fetching Data Failed:", error);
         } finally {
             setIsLoading(false);

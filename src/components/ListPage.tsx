@@ -62,7 +62,7 @@ const ListPage: React.FC = () => {
 
                 setTotalPages(1);
             } catch (error) {
-                logError('fetchListDetails', error);
+                logError(error, 'fetchListDetails');
             } finally {
                 setIsLoading(false);
             }
@@ -85,7 +85,7 @@ const ListPage: React.FC = () => {
                 navigate('/');
             }
         } catch (error) {
-            logError('deleteListUI', error);
+            logError(error, 'deleteListUI');
             showCustomToast("Error", "Could not delete list. Please try again.", "destructive", "CUSTOM LISTS");
         } finally {
             setIsLoading(false);

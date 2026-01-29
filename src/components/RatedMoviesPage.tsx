@@ -47,9 +47,9 @@ const RatedMoviesPage: React.FC = () => {
                     setMovies([]);
                 }
 
-                setTotalPages(1);
+                setTotalPages(1); // Backend ratings currently not paginated
             } catch (error) {
-                logError('fetchRatedMovies', error);
+                logError(error, 'fetchRatedMovies');
             } finally {
                 setIsLoading(false);
             }

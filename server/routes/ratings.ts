@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as ratingController from '../controllers/ratingController.js';
+import { ratingController } from '../controllers/ratingController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
 const router = Router();
