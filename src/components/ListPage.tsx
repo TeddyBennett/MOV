@@ -95,17 +95,17 @@ const ListPage: React.FC = () => {
     return (
         <div className="max-w-[1248px] mx-auto px-4 mt-8">
             <div className="bg-gray-900/30 backdrop-blur-sm border border-white/5 rounded-3xl shadow-2xl overflow-hidden pb-8">
-                <header className="p-8 flex flex-col items-center bg-gradient-to-b from-indigo-900/20 to-transparent">
+                <header className="pt-4 flex flex-col items-center bg-gradient-to-b from-indigo-900/20 to-transparent">
                     <div className="flex items-center gap-4 mb-2">
-                        <h1 className="text-4xl font-bold text-white">{listDetails.name || 'Loading List...'}</h1>
+                        <h1 className="text-2xl font-bold text-white">{listDetails.name || 'Loading List...'}</h1>
                         {listDetails.id && (
-                            <button
-                                onClick={handleDeleteList}
-                                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all"
-                                title="Delete List"
-                            >
-                                <Trash2 size={24} />
-                            </button>
+                                <button
+                                    onClick={handleDeleteList}
+                                    className="bg-white/10 hover:bg-red-600 shadow-black/20 backdrop-blur-md px-8 py-3 bg-white text-white rounded-xl flex items-center transition-all duration-300 font-bold text-sm shadow-xl hover:scale-105 active:scale-95"
+                                >
+                                    <Trash2 className='mr-2 text-red-500' size={24} />
+                                    Detete List
+                                </button>
                         )}
                     </div>
                     <p className="text-gray-400">{listDetails.description}</p>

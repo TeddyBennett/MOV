@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { Skeleton } from './ui/skeleton';
 
 export const MovieGridSkeleton: React.FC = () => (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 p-3 sm:p-8 w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3  sm:gap-6 p-3 sm:p-8 max-w-[1248px] mx-auto">
         {[...Array(12)].map((_, i) => (
             <div key={i} className="space-y-3">
                 <Skeleton className="h-[300px] w-full rounded-xl" />
@@ -32,7 +32,7 @@ const MovieGrid: React.FC = () => {
     const processedMovies = movieDataOperations.getProcessedMovies(movies, NoPosterH);
 
     return (
-        <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 p-3 sm:p-5 w-full ${!isHome ? 'pt-5' : ''}`}>
+        <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 p-3 sm:p-5 max-w-[1248px] mx-auto ${!isHome ? 'pt-5' : ''}`}>
             {processedMovies.length > 0 ? (
                 processedMovies.map((movie: any) => (
                     <MovieCard
