@@ -11,7 +11,7 @@ import { Skeleton } from './ui/skeleton';
 import { Movie, List } from '../types';
 
 const ListSkeleton = () => (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 p-8">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-8 max-w-[1248px] mx-auto">
         {[...Array(12)].map((_, i) => (
             <div key={i} className="space-y-3">
                 <Skeleton className="h-[300px] w-full rounded-xl" />
@@ -93,10 +93,10 @@ const ListPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-transparent mt-5">
-            <header className="p-8 flex flex-col items-center">
+        <div className="min-h-screen bg-transparent">
+            <header className="p-2 px-5 mx-auto max-w-[1248px]">
                 <div className="flex items-center gap-4 mb-2">
-                    <h1 className="text-4xl font-bold text-white">{listDetails.name || 'Loading List...'}</h1>
+                    <h1 className="text-2xl font-bold text-white">{listDetails.name || 'Loading List...'}</h1>
                     {listDetails.id && (
                         <button
                             onClick={handleDeleteList}

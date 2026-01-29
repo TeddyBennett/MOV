@@ -12,7 +12,7 @@ interface WatchlistSkeletonProps {
 }
 
 const WatchlistSkeleton: React.FC<WatchlistSkeletonProps> = ({ count }) => (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 p-8">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-8 max-w-[1248px] mx-auto">
         {Array.from({ length: count }).map((_, i) => (
             <div key={i} className="space-y-3">
                 <Skeleton className="h-[300px] w-full rounded-xl" />
@@ -59,8 +59,8 @@ const WatchlistPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-transparent">
-            <header className="p-8 text-center">
-                <h1 className="text-4xl font-bold text-white mb-2">My Watchlist</h1>
+            <header className="p-2 px-5 mx-auto max-w-[1248px]">
+                <h1 className="text-2xl font-bold text-white mb-2">My Watchlist</h1>
                 <p className="text-gray-400">Movies you're planning to watch</p>
             </header>
 

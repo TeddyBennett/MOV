@@ -4,7 +4,6 @@ import Content from './components/Content';
 import { useDebounce } from 'use-debounce';
 import Pagination from './components/Pagination';
 import { useDataContext } from './data/DataContext';
-import NavMenu from './components/NavMenu';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import MovieGrid from './components/MovieGrid';
 import { Toaster } from "./components/ui/toaster";
@@ -177,7 +176,6 @@ const App: React.FC = () => {
     return (
         <>
             <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <NavMenu />
             {location.pathname === '/' && (
                 <Content
                     trendMovies={trendMovies}
