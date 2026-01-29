@@ -687,6 +687,10 @@ svg {
     padding: 1rem 0.5rem;
   }
 
+  header>h2 {
+    font-size: medium !important;
+  }
+
   .header-flex-container {
     max-width: 95%;
     padding: 0.8rem;

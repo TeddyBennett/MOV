@@ -53,7 +53,7 @@ const Content: React.FC<ContentProps> = ({
         <main className="main-flex-container">
             <div className="trend-movies-container">
                 <header className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Top Trending Now</h2>
+                    <h2 className="text-xl font-bold text-white tracking-tight">Top Trending Now</h2>
                     {location.pathname === "/" && (
                         <div className="relative" ref={dropdownRef}>
                             <button
