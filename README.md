@@ -1,44 +1,100 @@
 # Movie App
 
-A React + Vite application that integrates with The Movie Database (TMDB) API to browse and search movies.
+A full-stack React + TypeScript application for browsing movies, managing favorites, and creating custom lists.
 
-## Environment Variables
+## 🏗 Tech Stack
 
-This project requires environment variables to connect to the TMDB API. Create a `.env` file in the root directory with the following variables:
+### Frontend
+- **Framework:** React 19 (Vite)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS, Shadcn UI (Radix Primitives)
+- **State/Routing:** React Router v7, Context API
 
-```env
-# No frontend environment variables required for TMDB API calls anymore.
-# All TMDB API interactions are now proxied through the backend.
-```
+### Backend
+- **Runtime:** Node.js
+- **Framework:** Express
+- **Database:** PostgreSQL
+- **ORM:** Prisma
+- **Authentication:** Better Auth
 
-To get your TMDB API keys:
-1. Sign up at [The Movie Database](https://www.themoviedb.org/)
-2. Navigate to Settings > API
-3. Create an API key
-4. Add your API key to the `.env` file
+## 🚀 Setup & Installation
 
-## Setup
+This project consists of a Client (Root) and a Server (`/server`). You will need to run both concurrently.
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Create a `.env` file based on `.env.example`
-4. Start the development server: `npm run dev`
+### 1. Prerequisites
+- Node.js (v20+ recommended)
+- PostgreSQL Database
 
-## Scripts
+### 2. Backend Setup
+The backend handles API requests, database interactions, and proxies calls to TMDB.
 
-- `npm run dev` - Start the development server
-- `npm run build` - Build the application for production
-- `npm run lint` - Run ESLint
-- `npm run preview` - Preview the production build locally
+1. Navigate to the server directory:
+   ```bash
+   cd server
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Configure Environment Variables:
+   Create a `.env` file in the `server` directory:
+   ```env
+   # Database connection
+   DATABASE_URL="postgresql://user:password@localhost:5432/movie_app"
 
-## Expanding the ESLint configuration
+   # Server Port
+   PORT=5000
+   
+   # Better Auth Secret
+   BETTER_AUTH_SECRET="your_generated_secret"
+   
+   # TMDB API Key (if required by backend logic)
+   TMDB_API_KEY="your_tmdb_api_key"
+   ```
+4. Initialize Database:
+   ```bash
+   npx prisma generate
+   npx prisma migrate dev
+   ```
+5. Start the Server:
+   ```bash
+   npm run dev
+   ```
+   *The server will start on port 5000.*
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Frontend Setup
 
-## Agentic Engineering
+1. Open a new terminal in the **root** directory.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Client:
+   ```bash
+   npm run dev
+   ```
+   *The application will launch at `http://localhost:5173`.*
 
-This project follows the **PRP (Product Requirement Prompt)** methodology for AI-assisted development. We use specialized agents to ensure code quality and maintain documentation.
+> **Note:** The Vite config is set up to proxy `/api` requests to `http://localhost:5000`. You do not need to configure backend URLs in the frontend `.env`.
 
-- See [AGENTS.md](./AGENTS.md) for a list of specialized agents and their roles.
-- Follow the guidelines in [PRPs-agentic-eng/CLAUDE.md](./PRPs-agentic-eng/CLAUDE.md) for contribution rules.
-- Run `/prp-review-agents` before submitting pull requests.
+## 🤖 Agentic Engineering & Documentation
+
+This project utilizes the **PRP (Product Requirement Prompt)** methodology for AI-assisted development.
+
+- **Implementation Plans:** Detailed architectural plans, refactoring logs, and decisions can be found in `docs/plans/`.
+  - Check `docs/plans/2026-01-21-add-backend.plan.md` for the backend architecture.
+  - Check `docs/plans/2026-01-29-refactor-to-typescript.plan.md` for the migration log.
+- **Agents:** See [AGENTS.md](./AGENTS.md) for a list of specialized agents and their roles.
+- **Guidelines:** Follow [PRPs-agentic-eng/CLAUDE.md](./PRPs-agentic-eng/CLAUDE.md) for contribution rules.
+
+## 📜 Scripts
+
+**Root:**
+- `npm run dev`: Starts the frontend development server.
+- `npm run build`: Builds both backend and frontend.
+- `npm run lint`: Runs ESLint for the frontend.
+
+**Server (`/server`):**
+- `npm run dev`: Starts the backend in watch mode.
+- `npm run build`: Compiles the backend and runs migrations.
+- `npm run prisma:studio`: Opens the Prisma GUI to view database records.
