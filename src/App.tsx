@@ -17,6 +17,7 @@ import { logError } from './utils/errorHandler';
 import MovieDetails from './components/MovieDetails';
 import React from 'react';
 import { Movie } from './types';
+import { Analytics } from '@vercel/analytics/react';
 
 const App: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -204,6 +205,7 @@ const App: React.FC = () => {
             )}
 
             <Toaster />
+            <Analytics />
         </>
     );
 };
